@@ -1,0 +1,49 @@
+{
+  "_doc": "比亚迪王朝秦系口碑项目-模板 的手工校正版 template_spec.json。该模板为 4 页结构：封面 + 目录 + 内容页风格 + 结束页，推荐 style_clone 路线。",
+  "template_file": "比亚迪王朝秦系口碑项目-模板.pptx",
+  "route": "style_clone",
+  "design_tokens": {
+    "primary_color": "404040",
+    "text_dark": "1D1D1A",
+    "text_mid": "555555",
+    "bg_light": "F7F4EF"
+  },
+  "slide_types": {
+    "cover": {
+      "slide_file": "slide1.xml",
+      "placeholders": {
+        "title": "文本框 2",
+        "date": "文本框 3"
+      },
+      "has_background_image": true,
+      "_note": "封面为全幅背景图，标题位于左中部，底部为汇报人与日期。"
+    },
+    "toc": {
+      "slide_file": "slide2.xml",
+      "placeholders": {
+        "title": "文本框 3",
+        "items": [
+          "文本框 3",
+          "文本框 7",
+          "文本框 8"
+        ]
+      },
+      "has_background_image": false,
+      "_note": "目录页含中文目录标题和 CONTENTS，右侧 3 个目录项。"
+    },
+    "content_style": {
+      "slide_file": "slide3.xml",
+      "placeholders": {
+        "page_title": "文本框 18"
+      },
+      "has_background_image": false,
+      "_note": "内容页顶部有标题文本，正文区由 style_clone 绘制。"
+    },
+    "end": {
+      "slide_file": "slide4.xml",
+      "placeholders": {},
+      "has_background_image": true,
+      "_note": "结束页主要为居中图片元素，无文字占位。"
+    }
+  }
+}
