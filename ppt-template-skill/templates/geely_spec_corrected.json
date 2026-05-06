@@ -1,0 +1,31 @@
+{
+  "_doc": "吉利模板的手工校正版 template_spec.json（吉利模板只有封面+过渡页，无独立 content/end 页）",
+  "template_file": "吉利模版.pptx",
+  "design_tokens": {
+    "primary_color": "093BAA",
+    "text_dark": "FFFFFF",
+    "text_mid": "CCDDFF",
+    "bg_light": "1A3070"
+  },
+  "slide_types": {
+    "cover": {
+      "slide_file": "slide1.xml",
+      "placeholders": {
+        "title": "object 5",
+        "date": "object 3"
+      },
+      "has_background_image": true,
+      "_note": "背景为全幅蓝色渐变图，标题白色汉仪雅酷黑字体，日期在标题下方"
+    },
+    "transition": {
+      "slide_file": "slide3.xml",
+      "placeholders": {
+        "title": "object 5",
+        "date": "object 3"
+      },
+      "has_background_image": true,
+      "_note": "与封面相同背景，用于金句/章节标题"
+    }
+  },
+  "_note": "吉利模板没有独立的 content 页和 end 页。如需内容页，请用 pptxgenjs 以 #093BAA 主色生成白底内容页并追加。"
+}

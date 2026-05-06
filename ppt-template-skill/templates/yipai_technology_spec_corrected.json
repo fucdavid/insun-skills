@@ -1,0 +1,37 @@
+{
+  "_doc": "奕派科技PPT模板的手工校正版 template_spec.json。该模板为 5 页结构：封面 + 目录/提纲页 + 章节/内容风格页 + 结束页，推荐 style_clone 路线；部分占位符无坐标，避免走 dual_track。",
+  "template_file": "奕派科技PPT模板.pptx",
+  "route": "style_clone",
+  "design_tokens": {
+    "primary_color": "0066CC",
+    "text_dark": "111111",
+    "text_mid": "555555",
+    "bg_light": "FFFFFF"
+  },
+  "slide_types": {
+    "cover": {
+      "slide_file": "slide1.xml",
+      "placeholders": {
+        "title": "文本占位符 22",
+        "date": "文本占位符 1"
+      },
+      "has_background_image": true
+    },
+    "toc": {
+      "slide_file": "slide2.xml",
+      "placeholders": {
+        "items": ["标题 1", "文本占位符 2", "文本占位符 3", "文本占位符 4"]
+      },
+      "has_background_image": false
+    },
+    "content_styles": [
+      { "slide_file": "slide3.xml", "style_name": "content_style_a" },
+      { "slide_file": "slide4.xml", "style_name": "content_style_b" }
+    ],
+    "end": {
+      "slide_file": "slide5.xml",
+      "placeholders": {},
+      "has_background_image": false
+    }
+  }
+}
