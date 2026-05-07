@@ -59,6 +59,21 @@ MUTED = "333333"
 PANEL = "FFFFFF"
 FONT = "汉仪雅酷黑 75W"
 EMU_PER_INCH = 914400
+CURRENT_TOKENS = {}
+
+
+def token(name, default):
+    value = CURRENT_TOKENS.get(name, default)
+    return str(value).replace("#", "") if value else default
+
+
+def palette():
+    primary = token("primary_color", BLUE)
+    secondary = token("secondary_color", token("accent_color", CYAN))
+    accent = token("accent_color", primary)
+    success = token("success_color", GREEN)
+    warning = token("warning_color", ORANGE)
+    return [primary, secondary, success, warning, primary]
 
 
 def rgb(hex_color: str) -> RGBColor:
@@ -366,6 +381,19 @@ def load_template_role_spec(template_path):
     return None
 
 
+def load_template_tokens(template_path):
+    spec_dir = template_path.parent
+    for spec_path in spec_dir.glob("*_spec_corrected.json"):
+        try:
+            spec = json.loads(spec_path.read_text(encoding="utf-8-sig"))
+        except Exception:
+            continue
+        if spec.get("template_file") == template_path.name:
+            tokens = spec.get("design_tokens") or {}
+            return tokens if isinstance(tokens, dict) else {}
+    return {}
+
+
 def resolve_template_roles(prs, template_path):
     spec_roles = load_template_role_spec(template_path)
     if spec_roles:
@@ -481,7 +509,7 @@ def bullet(slide, x, y, w, head, body, color=BLUE):
 
 
 def layout_kpi(slide, items, start_y=1.35):
-    colors = [BLUE, GREEN, CYAN, ORANGE]
+    colors = palette()
     cols = min(len(items), 3)
     card_w = 3.55 if cols == 3 else 5.2
     start_x = 0.72 if cols == 3 else 1.15
@@ -504,7 +532,7 @@ def layout_kpi(slide, items, start_y=1.35):
 
 
 def layout_grid(slide, items, start_y=1.45):
-    colors = [BLUE, CYAN, GREEN, ORANGE, BLUE, GREEN]
+    colors = palette() + palette()
     for i, item in enumerate(items[:6]):
         x = 0.75 + (i % 2) * 6.05
         y = start_y + (i // 2) * 1.45
@@ -517,7 +545,7 @@ def layout_grid(slide, items, start_y=1.45):
 
 
 def layout_timeline(slide, items, start_y=1.45):
-    colors = [BLUE, GREEN, CYAN, ORANGE, BLUE]
+    colors = palette()
     line_y = start_y + 2.4
     slide.shapes.add_shape(MSO_AUTO_SHAPE_TYPE.RECTANGLE, Inches(1.4), Inches(line_y), Inches(10.2), Inches(0.03)).fill.solid()
     slide.shapes[-1].fill.fore_color.rgb = rgb(LIGHT_BLUE)
@@ -540,6 +568,180 @@ def layout_big(slide, items, start_y=1.75):
     tx(slide, item.get("value", ""), 1.45, start_y + 0.3, 10.2, 0.75, 40, BLUE, True, "center")
     tx(slide, item.get("label", ""), 1.45, start_y + 1.3, 10.2, 0.35, 18, TEXT, True, "center")
     tx(slide, item.get("desc", ""), 1.75, start_y + 2.0, 9.6, 0.6, 12, MUTED, False, "center")
+
+
+def layout_insight(slide, body, start_y=1.35):
+    colors = palette()
+    insight = body.get("insight") or body.get("point") or body.get("core_point") or ""
+    path = body.get("path") or body.get("evolution") or body.get("steps") or []
+    data = body.get("data") or body.get("metrics") or []
+    quote = body.get("quote") or body.get("golden_sentence") or ""
+    items = body.get("items") or []
+
+    if not data:
+        data = [item for item in items if item.get("value")]
+    if not path:
+        path = [item for item in items if not item.get("value")][:5]
+    if not insight and items:
+        first = items[0]
+        insight = first.get("desc") or first.get("label") or ""
+        path = path[1:] if path and path[0] is first else path
+
+    y = start_y
+    rect(slide, 0.72, y, 4.5, 1.15)
+    tx(slide, "核心观点", 0.96, y + 0.2, 0.85, 0.18, 9, BLUE, True)
+    tx(slide, insight, 1.82, y + 0.18, 2.9, 0.55, 10.2, TEXT, True)
+
+    tx(slide, body.get("path_title") or "关键演进路径", 0.72, y + 1.42, 4.1, 0.22, 11.2, TEXT, True)
+    for i, item in enumerate(path[:5]):
+        py = y + 1.86 + i * 0.48
+        label = item.get("label") or item.get("stage") or item.get("title") or f"{i + 1}"
+        desc = item.get("desc") or item.get("note") or ""
+        value = item.get("value") or f"{i + 1}.0"
+        tag = slide.shapes.add_shape(MSO_AUTO_SHAPE_TYPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(py), Inches(0.62), Inches(0.24))
+        tag.fill.solid()
+        tag.fill.fore_color.rgb = rgb(colors[i % len(colors)])
+        tag.line.fill.background()
+        tx(slide, str(value), 0.8, py + 0.04, 0.62, 0.1, 7.5, "FFFFFF", True, "center")
+        tx(slide, label, 1.58, py + 0.01, 1.25, 0.17, 8.7, TEXT, True)
+        tx(slide, desc, 2.78, py + 0.01, 2.25, 0.17, 6.8, MUTED)
+
+    tx(slide, body.get("data_title") or "关键数据", 5.7, y, 4.0, 0.22, 11.2, TEXT, True)
+    for i, item in enumerate(data[:4]):
+        x = 5.72 + (i % 2) * 2.85
+        dy = y + 0.42 + (i // 2) * 1.02
+        rect(slide, x, dy, 2.5, 0.82)
+        bar = slide.shapes.add_shape(MSO_AUTO_SHAPE_TYPE.RECTANGLE, Inches(x), Inches(dy), Inches(0.06), Inches(0.82))
+        bar.fill.solid()
+        bar.fill.fore_color.rgb = rgb(colors[i % len(colors)])
+        bar.line.fill.background()
+        tx(slide, item.get("value", ""), x + 0.18, dy + 0.11, 0.8, 0.25, 14, colors[i % len(colors)], True)
+        tx(slide, item.get("label", ""), x + 1.0, dy + 0.12, 1.22, 0.18, 7.8, TEXT, True)
+        tx(slide, item.get("desc", ""), x + 1.0, dy + 0.39, 1.2, 0.24, 6.3, MUTED)
+
+    if quote:
+        rect(slide, 5.72, y + 2.72, 5.25, 0.98)
+        tx(slide, quote, 6.05, y + 2.98, 4.55, 0.34, 13.5, BLUE, True, "center")
+
+
+def layout_campaign_columns(slide, body, start_y=1.25):
+    columns = body.get("columns") or body.get("campaigns") or body.get("items") or []
+    headline = body.get("headline") or body.get("thesis") or ""
+    footer_text = body.get("footer") or body.get("summary") or ""
+    accent = token("accent_color", token("primary_color", BLUE))
+    col_w = 3.95
+    gap = 0.28
+    start_x = 0.46
+
+    if headline:
+        tx(slide, headline, 1.25, start_y, 10.6, 0.26, 13.5, TEXT, True, "center")
+
+    for i, item in enumerate(columns[:3]):
+        x = start_x + i * (col_w + gap)
+        y = start_y + 0.48
+        scenario = item.get("scenario") or item.get("eyebrow") or ""
+        tag = item.get("tag") or item.get("theme") or item.get("label") or ""
+        title_text = item.get("title") or item.get("name") or ""
+        desc = item.get("desc") or item.get("description") or ""
+        directions = item.get("directions") or item.get("actions") or []
+        metrics = item.get("metrics") or item.get("kpi") or item.get("target") or ""
+
+        if scenario:
+            tx(slide, scenario, x + 0.06, y, col_w - 0.12, 0.24, 10.2, MUTED, True, "center")
+
+        header = slide.shapes.add_shape(
+            MSO_AUTO_SHAPE_TYPE.ROUNDED_RECTANGLE,
+            Inches(x),
+            Inches(y + 0.34),
+            Inches(col_w),
+            Inches(0.52),
+        )
+        header.fill.solid()
+        header.fill.fore_color.rgb = rgb(accent)
+        header.line.fill.background()
+        tx(slide, tag, x + 0.12, y + 0.51, col_w - 0.24, 0.14, 11.5, "FFFFFF", True, "center")
+
+        card_y = y + 1.0
+        card_h = 3.75
+        card = slide.shapes.add_shape(
+            MSO_AUTO_SHAPE_TYPE.RECTANGLE,
+            Inches(x),
+            Inches(card_y),
+            Inches(col_w),
+            Inches(card_h),
+        )
+        card.fill.solid()
+        card.fill.fore_color.rgb = rgb("FFFFFF")
+        card.line.color.rgb = rgb("888888")
+        card.line.width = Pt(0.6)
+
+        tx(slide, title_text, x + 0.18, card_y + 0.14, col_w - 0.36, 0.22, 10.2, TEXT, True, "center")
+        tx(slide, desc, x + 0.25, card_y + 0.48, col_w - 0.5, 0.52, 7.8, TEXT)
+
+        if directions:
+            left = directions[0] if len(directions) > 0 else {}
+            right = directions[1] if len(directions) > 1 else {}
+            tx(slide, left.get("label", ""), x + 0.3, card_y + 1.09, 1.45, 0.15, 7.5, TEXT, True, "center")
+            tx(slide, right.get("label", ""), x + 2.08, card_y + 1.09, 1.45, 0.15, 7.5, TEXT, True, "center")
+
+        # Image/material slots. Real images can be added by future callers before or after this layout.
+        slot_y = card_y + 1.34
+        slot_h = 1.9
+        for j in range(2):
+            slot_x = x + 0.28 + j * 1.75
+            slot = slide.shapes.add_shape(
+                MSO_AUTO_SHAPE_TYPE.RECTANGLE,
+                Inches(slot_x),
+                Inches(slot_y),
+                Inches(1.55),
+                Inches(slot_h),
+            )
+            slot.fill.solid()
+            slot.fill.fore_color.rgb = rgb("EEF2F7")
+            slot.line.color.rgb = rgb("CCD6E6")
+            tx(slide, "素材图", slot_x + 0.22, slot_y + 0.84, 1.1, 0.18, 8, MUTED, True, "center")
+
+        if metrics:
+            metric = slide.shapes.add_shape(
+                MSO_AUTO_SHAPE_TYPE.ROUNDED_RECTANGLE,
+                Inches(x + 0.35),
+                Inches(card_y + 3.28),
+                Inches(col_w - 0.7),
+                Inches(0.44),
+            )
+            metric.fill.solid()
+            metric.fill.fore_color.rgb = rgb("6F7682")
+            metric.line.fill.background()
+            tx(slide, str(metrics), x + 0.5, card_y + 3.38, col_w - 1.0, 0.12, 8.2, "FFFFFF", False, "center")
+
+    if footer_text:
+        band_y = 6.42
+        band = slide.shapes.add_shape(
+            MSO_AUTO_SHAPE_TYPE.RECTANGLE,
+            Inches(0.46),
+            Inches(band_y),
+            Inches(11.85),
+            Inches(0.42),
+        )
+        band.fill.solid()
+        band.fill.fore_color.rgb = rgb("F0F0F0")
+        band.line.fill.background()
+        tx(slide, footer_text, 0.72, band_y + 0.12, 11.3, 0.12, 9.5, TEXT, False, "center")
+
+
+LAYOUT_ALIASES = {
+    "kpi_card": "kpi",
+    "insight": "insight_onepage",
+    "argument_page": "insight_onepage",
+    "campaign_columns": "campaign_three_columns",
+    "operation_plan": "campaign_three_columns",
+    "quote": "big_stat",
+}
+
+
+def normalize_layout(layout):
+    layout = layout or "auto"
+    return LAYOUT_ALIASES.get(layout, layout)
 
 
 def render_toc_slide(slide, slide_data, page_num, source):
@@ -646,14 +848,22 @@ def render_content_slide(slide, slide_data, page_num, source, draw_title=True, c
     start_y = max(1.35, (content_top or 1.1) + 0.28)
     body = slide_data.get("body", {})
     items = body.get("items", [])
-    layout = body.get("layout", "auto")
+    layout = normalize_layout(body.get("layout", "auto"))
     if layout == "auto":
-        layout = "kpi" if any(item.get("value") for item in items) else ("timeline" if len(items) == 4 and body.get("timeline") else "grid")
-    if layout in ("kpi", "kpi_card"):
+        if body.get("quote") and (body.get("path") or body.get("evolution") or body.get("data") or body.get("insight")):
+            layout = "insight_onepage"
+        else:
+            layout = "kpi" if any(item.get("value") for item in items) else ("timeline" if len(items) == 4 and body.get("timeline") else "grid")
+    layout = normalize_layout(layout)
+    if layout == "kpi":
         layout_kpi(slide, items, start_y)
+    elif layout == "insight_onepage":
+        layout_insight(slide, body, start_y)
+    elif layout == "campaign_three_columns":
+        layout_campaign_columns(slide, body, start_y)
     elif layout == "timeline":
         layout_timeline(slide, items, start_y)
-    elif layout in ("big_stat", "quote"):
+    elif layout == "big_stat":
         layout_big(slide, items, max(1.75, start_y))
     else:
         layout_grid(slide, items, start_y)
@@ -661,8 +871,10 @@ def render_content_slide(slide, slide_data, page_num, source, draw_title=True, c
 
 
 def build(content_path: Path, output_path: Path, template_path: Path):
+    global CURRENT_TOKENS
     content = json.loads(content_path.read_text(encoding="utf-8-sig"))
     prs = Presentation(str(template_path))
+    CURRENT_TOKENS = load_template_tokens(template_path)
 
     cover_idx, toc_template_idx, transition_indices, content_indices, end_idx = resolve_template_roles(prs, template_path)
     desired_slides = ensure_toc_slide(content.get("slides") or [], toc_template_idx is not None)

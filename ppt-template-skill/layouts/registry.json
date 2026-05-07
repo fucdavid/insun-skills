@@ -1,0 +1,59 @@
+{
+  "version": "1.0",
+  "progressive_disclosure": true,
+  "rules": [
+    "先根据 content_type 选择布局，再加载 detail_file。",
+    "参考图只用于抽象结构，配色必须继承当前模板 design_tokens。",
+    "单页字段只填写当前布局需要的字段，不混塞多个布局字段。"
+  ],
+  "layouts": [
+    {
+      "name": "kpi_card",
+      "aliases": ["kpi"],
+      "content_type": "核心数据页",
+      "fields": ["items[].value", "items[].label", "items[].desc"],
+      "limit": "2-4 个核心指标；超过 4 个拆页或转列表。",
+      "detail_file": null
+    },
+    {
+      "name": "grid",
+      "aliases": ["bullet_list"],
+      "content_type": "同级要点页",
+      "fields": ["items[].label", "items[].desc"],
+      "limit": "3-6 个并列要点；label 控制在 10 字以内，desc 控制在 28 字以内。",
+      "detail_file": null
+    },
+    {
+      "name": "timeline",
+      "aliases": [],
+      "content_type": "流程路径页",
+      "fields": ["items[].label", "items[].desc"],
+      "limit": "3-5 个步骤或阶段；超过 5 个拆页。",
+      "detail_file": null
+    },
+    {
+      "name": "big_stat",
+      "aliases": ["quote"],
+      "content_type": "单结论页",
+      "fields": ["items[0].value", "items[0].label", "items[0].desc"],
+      "limit": "只承载一个大数字或一句主张。",
+      "detail_file": null
+    },
+    {
+      "name": "insight_onepage",
+      "aliases": ["insight", "argument_page"],
+      "content_type": "观点论证页",
+      "fields": ["insight", "path[]", "data[]", "quote"],
+      "limit": "最多 5 个路径节点、4 个数据卡片、1 句金句。",
+      "detail_file": "insight_onepage.md"
+    },
+    {
+      "name": "campaign_three_columns",
+      "aliases": ["campaign_columns", "operation_plan"],
+      "content_type": "运营规划三栏页",
+      "fields": ["headline", "columns[]", "footer"],
+      "limit": "固定 3 栏；少于或多于 3 栏不要使用。",
+      "detail_file": "campaign_three_columns.md"
+    }
+  ]
+}
