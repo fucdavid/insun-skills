@@ -20,7 +20,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from render_geely_report import build
+from render_report import build
 
 
 def main():

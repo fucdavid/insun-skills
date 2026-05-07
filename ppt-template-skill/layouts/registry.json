@@ -1,59 +1,96 @@
 {
-  "version": "1.0",
+  "version": "1.6",
   "progressive_disclosure": true,
   "rules": [
     "先根据 content_type 选择布局，再加载 detail_file。",
-    "参考图只用于抽象结构，配色必须继承当前模板 design_tokens。",
-    "单页字段只填写当前布局需要的字段，不混塞多个布局字段。"
+    "新增排版优先从用户提供的 PPTX 提取真实坐标、尺寸、字体层级、形状层级和固定视觉元素；没有 PPTX 时再用图片反推。",
+    "参考图/PPT 只用于抽象结构和视觉层级，整体配色和字体必须继承当前模板 design_tokens。",
+    "每个布局必须声明是否复用模板标题框、是否清空模板示例文本、哪些视觉锚点必须保留。",
+    "用户截图中的红框、选择框、批注线不属于版式元素，除非用户明确要求保留。",
+    "单页字段只填写当前布局需要的字段，不混塞多个布局字段。",
+    "当前排版库仅保留用户参考图或参考 PPT 沉淀的布局；其他旧布局仅作为脚本内部兜底，不作为排版库成员。"
   ],
   "layouts": [
-    {
-      "name": "kpi_card",
-      "aliases": ["kpi"],
-      "content_type": "核心数据页",
-      "fields": ["items[].value", "items[].label", "items[].desc"],
-      "limit": "2-4 个核心指标；超过 4 个拆页或转列表。",
-      "detail_file": null
-    },
-    {
-      "name": "grid",
-      "aliases": ["bullet_list"],
-      "content_type": "同级要点页",
-      "fields": ["items[].label", "items[].desc"],
-      "limit": "3-6 个并列要点；label 控制在 10 字以内，desc 控制在 28 字以内。",
-      "detail_file": null
-    },
-    {
-      "name": "timeline",
-      "aliases": [],
-      "content_type": "流程路径页",
-      "fields": ["items[].label", "items[].desc"],
-      "limit": "3-5 个步骤或阶段；超过 5 个拆页。",
-      "detail_file": null
-    },
-    {
-      "name": "big_stat",
-      "aliases": ["quote"],
-      "content_type": "单结论页",
-      "fields": ["items[0].value", "items[0].label", "items[0].desc"],
-      "limit": "只承载一个大数字或一句主张。",
-      "detail_file": null
-    },
-    {
-      "name": "insight_onepage",
-      "aliases": ["insight", "argument_page"],
-      "content_type": "观点论证页",
-      "fields": ["insight", "path[]", "data[]", "quote"],
-      "limit": "最多 5 个路径节点、4 个数据卡片、1 句金句。",
-      "detail_file": "insight_onepage.md"
-    },
     {
       "name": "campaign_three_columns",
       "aliases": ["campaign_columns", "operation_plan"],
       "content_type": "运营规划三栏页",
       "fields": ["headline", "columns[]", "footer"],
       "limit": "固定 3 栏；少于或多于 3 栏不要使用。",
-      "detail_file": "campaign_three_columns.md"
+      "detail_file": "campaign_three_columns.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版样例3.pptx",
+      "source_slide": 3,
+      "spec_file": "specs/campaign_three_columns.json",
+      "compiled_pptx": "compiled/campaign_three_columns.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "sample3_live_overall",
+      "aliases": ["event_live_overall", "live_overall_plan"],
+      "content_type": "大型活动直播整体规划页",
+      "fields": ["title", "banner", "purpose", "strategy", "benefit", "video_items_left", "video_items_right"],
+      "limit": "活动直播总览页；适合目的/策略/直播线/视频线结构。",
+      "detail_file": "sample3_live_overall.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版样例3.pptx",
+      "source_slide": 1,
+      "spec_file": "specs/sample3_live_overall.json",
+      "compiled_pptx": "compiled/sample3_live_overall.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "sample3_ota_timeline",
+      "aliases": ["ota_strategy_timeline", "ota_timeline"],
+      "content_type": "OTA/传播三阶段策略页",
+      "fields": ["title", "summary", "dimensions[]", "theme", "stages[]", "fee"],
+      "limit": "2 个目标维度 + 3 个阶段策略 + 费用/资源说明；阶段数量固定为 3。",
+      "detail_file": "sample3_ota_timeline.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版样例3.pptx",
+      "source_slide": 2,
+      "spec_file": "specs/sample3_ota_timeline.json",
+      "compiled_pptx": "compiled/sample3_ota_timeline.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "sample3_koc_monthly_summary",
+      "aliases": ["koc_monthly_summary", "monthly_koc_dashboard"],
+      "content_type": "KOC月度运营总结页",
+      "fields": ["title", "summary", "metrics[]", "topics[]", "issue"],
+      "limit": "顶部总述 + 左侧核心数据 + 右侧重点事项 + 底部课题；信息过密时拆页。",
+      "detail_file": "sample3_koc_monthly_summary.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版样例3.pptx",
+      "source_slide": 4,
+      "spec_file": "specs/sample3_koc_monthly_summary.json",
+      "compiled_pptx": "compiled/sample3_koc_monthly_summary.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "statement_action_bar",
+      "aliases": ["judgement_action", "core_statement_action"],
+      "content_type": "核心研判行动页",
+      "fields": ["statement", "emphasis", "action", "action_highlight"],
+      "limit": "1 个核心判断 + 1 条行动结论；不使用模板标题框；必须保留左侧圆形图标和三个竖点锚点。",
+      "detail_file": "statement_action_bar.md",
+      "module": "statement_action_bar",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "owns_title": true,
+      "clear_template_sample_text": true
     }
   ]
 }

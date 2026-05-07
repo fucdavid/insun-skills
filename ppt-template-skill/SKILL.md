@@ -1,9 +1,6 @@
 ---
 name: ppt-template-skill
-description: 基于用户上传的 PPT 模板生成演示文稿。使用双轨策略：模板页（封面/过渡/尾页）通过 XML
-  克隆保证100%视觉还原，其中尾页必须原样保留；内容页正文区通过 pptxgenjs 按大纲内容动态排版。适用于吉利、奕境等品牌模板，也适用于任何
-  .pptx 模板文件。
-disable: false
+description: "基于用户上传的 PPT 模板生成演示文稿。使用双轨策略：模板页（封面/过渡/尾页）通过 XML 克隆保证100%视觉还原，其中尾页必须原样保留；内容页正文区通过 pptxgenjs 按大纲内容动态排版。适用于吉利、奕境等品牌模板，也适用于任何 .pptx 模板文件。"
 ---
 
 # PPT 模板复用技能
@@ -202,25 +199,20 @@ python scripts/build_skeleton.py template_spec.json content.json output_skeleton
 
 内容页正文区通过 `scripts/render_content.js` 独立生成每张内容页，结果以图片形式嵌入（或直接写入 pptxgenjs 输出合并）。
 
-**布局自动选择规则：**
+**排版库选择规则：**
 
 ```
-items 数量  →  自动布局
-──────────────────────────────────────────────────
-1 条目      →  big_stat（大字数据 + 说明）
-2 条目      →  two_col（左右两栏卡片）
-3 条目      →  three_col（三栏卡片，含图标）
-4 条目      →  four_grid（2×2 网格卡片）
-5-6 条目    →  bullet_list（带图标的要点列表）
-7+ 条目     →  compact_list（紧凑列表，双栏）
-含 value 字段 → 优先使用 kpi_card 布局（大数字突出）
-含 steps 字段 → timeline 布局（横向流程）
-含 table 字段 → table 布局
-含 insight/path/data/quote → insight_onepage 布局（观点 + 逻辑路径 + 数据 + 金句）
-含 columns/campaigns 且为 3 个活动专题 → campaign_three_columns 布局（三栏运营/营销规划页）
+当前排版库只登记：
+campaign_three_columns → 三栏运营/营销规划页
+sample3_live_overall → 大型活动直播整体规划页
+sample3_ota_timeline → OTA/传播三阶段策略页
+sample3_koc_monthly_summary → KOC月度运营总结页
+statement_action_bar → 核心研判 + 行动结论页
 ```
 
-**代码模板见 `scripts/render_content.js` 中各 `layout_*` 函数。**
+只有 `layouts/registry.json` 中 `status=ready` 且 `fidelity=accepted/ppt_exact` 的条目才属于可用排版库。历史脚本里存在但未登记为 ready 的版式只能作为内部草稿/兜底，不得推荐给其他模型直接使用。
+
+如果内容无法匹配当前排版库，不要伪造布局；优先使用脚本内部兜底生成基础内容页，或拆页，并提示用户后续可提供参考图或 PPT 加入排版库。
 
 关键参数：从 `template_spec.json` 读取 `body_zone` 和 `design_tokens`，确保正文颜色与模板主色一致。
 
@@ -228,16 +220,35 @@ items 数量  →  自动布局
 
 生成内容页前，必须先把用户材料拆成“信息架构”，不要把所有文字直接塞进同一种网格：
 
-- **观点论证页**：如果一页同时包含核心观点、演进路径/逻辑链、关键数据和金句，使用 `insight_onepage`，结构固定为“左侧观点+路径，右侧数据，底部/右下金句”。
-- **数据页**：如果 2-4 个条目都有 `value`，使用 `kpi_card`；不要混入长段落，长段落转成 `desc` 的一句话。
-- **流程页**：如果内容是阶段、步骤、路径、演进、时间线，使用 `timeline` 或 `insight_onepage` 的 `path` 字段；不要用普通 `grid`。
-- **要点页**：如果是 4-6 个同级结论，使用 `bullet_list`/`grid`；每条 `label` 控制在 10 字以内，`desc` 控制在 28 字以内。
-- **金句页**：如果只有一句总结或一个大数字，使用 `big_stat`/`quote`，不要添加多余卡片。
+### 用户大纲保真规则
+
+用户提供的大纲、要点、数据、结论和金句是内容源，不能为了排版好看随意删改。
+
+中文内容文件必须以 UTF-8 写入。不要用 PowerShell here-string、`echo` 或控制台管道临时拼中文 JSON；这些路径可能把中文转成 `?`。需要生成中文 `content.json` 时，使用已有文件、补丁写入或明确 `utf-8` 编码的脚本写入。
+
+执行要求：
+- 尽量完整保留用户给出的信息点、关键数据、专有名词、引用来源和结论。
+- 可以做轻微语言压缩，例如去掉重复语气词、把长句拆成短句，但不得改变含义。
+- 不得删除用户明确列出的关键数据、阶段、动作、来源和金句。
+- 排版空间不足时，优先选择以下处理方式：
+  1. 换成更适合高密度信息的布局；
+  2. 拆成多页；
+  3. 使用紧凑变体布局；
+  4. 保留正文完整，把补充解释放到备注区或下一页；
+  5. 明确告诉用户内容过密，需要拆页或确认删减。
+- 不允许为了塞进一页而无限缩小字号、压缩到不可读，或静默删掉内容。
+
+内容重构边界：
+- 允许：同义压缩、拆分长句、合并重复点、调整顺序以适配版式。
+- 不允许：改变观点方向、改写数据口径、删除来源、替换用户指定术语、把多个独立要点合成一个模糊表述。
+
 - **运营规划三栏页**：如果内容是 3 个活动专题、传播专题、KOC/KOL 任务包或节日营销专项，使用 `campaign_three_columns`，结构固定为“顶部总论 + 三栏专题卡 + 底部机制总结”。
+- **核心研判行动页**：如果内容是一句核心判断/风险研判，并配一条行动结论，使用 `statement_action_bar`，结构固定为“中上核心判断 + 左侧锚点 + 中部强调线 + 下方行动条”。该布局不使用模板内容页标题框，`page_title` 只用于目录/备注。
+- **其他内容类型**：当前不在排版库内。可以用脚本内部基础排版兜底生成，但不能声称其属于排版库；如果用户提供参考图，再按新增布局流程加入排版库。
 
 强制限制：
-- 单页正文最多承载 4 个数据卡片或 5 个路径节点；超出时拆成多页。
-- 标题不要重复绘制，优先使用模板原有标题文本框。
+- 单页正文内容过密时优先拆成多页，不要强塞到一个版式里。
+- 标题不要重复绘制，优先使用模板原有标题文本框；但排版库明确声明“不使用标题框”的布局（如 `statement_action_bar`）必须清空模板示例标题，不再额外绘制标题。
 - 正文必须避开模板标题区和页脚区；内容区不足时减少文字，不要缩到不可读字号。
 - 不要为了“看起来丰富”添加无意义装饰卡片、随机图标或大面积空框。
 
@@ -258,6 +269,22 @@ items 数量  →  自动布局
 - 同一页内使用 4 种以上无模板来源的强调色。
 - 为了区分栏目给每列随意分配红、绿、蓝、橙；栏目区分优先靠位置、编号、标题，而不是随机颜色。
 
+### 模板字体继承规则
+
+内容页字体必须优先沿用当前选择模板的字体体系。参考图只用于判断字号层级，不得跨模板照搬字体。
+
+执行要求：
+- 优先使用模板 spec 的 `design_tokens.font_title`、`design_tokens.font_body`、`design_tokens.font_number`。
+- 如果 spec 没有登记字体，脚本应从当前模板内容页已有文本框中推断主要字体。
+- 如果仍无法识别，才使用通用兜底字体，例如 `Microsoft YaHei`。
+- 标题、栏目标题、正文、数据数字可以有字号层级差异，但字体族应保持模板一致。
+- 不允许在所有模板中固定使用某一个字体，例如 `汉仪雅酷黑 75W`。
+
+字号规则：
+- 优先保留模板原有标题文本框字号。
+- 动态绘制正文时，只参考样图的“大/中/小”层级，不直接照搬具体字号。
+- 正文字号过小时优先压缩文案或拆页，不要无限缩小。
+
 ### 排版库扩展机制
 
 后续新增内容页排版时，不要只针对某一页截图临时写坐标；必须沉淀为可复用布局，并登记到排版库。
@@ -274,7 +301,7 @@ items 数量  →  自动布局
 2. **确定布局后再加载详情**
    - 只有当某页确定使用某个布局时，才读取该布局的详细说明、字段约束和示例。
    - 详情文件路径以 `layouts/registry.json` 中的 `detail_file` 为准，例如 `layouts/campaign_three_columns.md`。
-   - 例如识别为“三个活动专题”后，只加载 `campaign_three_columns` 的说明；不要同时加载 `insight_onepage`、`timeline`、`kpi_card` 的完整示例。
+   - 例如识别为“三个活动专题”后，只加载 `campaign_three_columns` 的说明。
 
 3. **生成时只传必要字段**
    - `content.json` 只包含当前布局需要的字段。
@@ -284,16 +311,22 @@ items 数量  →  自动布局
    - 每个布局都应该有独立说明和独立示例。
    - 布局索引只保留：布局名、别名、适用内容类型、核心字段、限制摘要。
 
+5. **预编译 shape 克隆布局**
+   - 对高保真参考 PPT 页，优先编译为 `layouts/compiled/<layout>.pptx` 单页包，并在 `layouts/specs/<layout>.json` 中登记 shape 字段映射。
+   - registry 中 `module` 使用 `compiled_shape`，运行时只在该布局被实际使用时加载对应 compiled PPTX，不加载整份参考 PPT，也不加载其他布局。
+   - 生成时复制原始 shapes，再按 spec 替换指定文本框；图片示例通过 `image_fields` 替换为用户图片或原位占位框。
+
 #### 内容类型矩阵
 
 | 内容类型 | 推荐布局 | 典型字段 | 适用场景 |
 |---------|---------|---------|---------|
-| 核心数据页 | `kpi_card` | `items[].value/label/desc` | 2-4 个核心指标、经营数据、对比数据 |
-| 同级要点页 | `grid` / `bullet_list` | `items[].label/desc` | 3-6 个并列观点、策略抓手 |
-| 流程路径页 | `timeline` | `items[]` 或 `steps[]` | 阶段、流程、节奏、演进路径 |
-| 观点论证页 | `insight_onepage` | `insight/path/data/quote` | 核心观点 + 逻辑链 + 数据证明 + 金句 |
 | 运营规划三栏页 | `campaign_three_columns` | `headline/columns/footer` | 三个活动专题、KOC/KOL 运营计划、节日营销 |
-| 单结论页 | `big_stat` / `quote` | `items[0]` 或 `quote` | 单句结论、战略主张、大数字强调 |
+| 大型活动直播整体规划页 | `sample3_live_overall` | `title/banner/purpose/strategy/benefit/video_items_left/video_items_right` | 赛事直播、发布会直播、活动直播总览 |
+| OTA/传播三阶段策略页 | `sample3_ota_timeline` | `title/summary/dimensions/theme/stages/fee` | OTA传播、新媒体三阶段节奏、产品升级传播 |
+| KOC月度运营总结页 | `sample3_koc_monthly_summary` | `title/summary/metrics/topics/issue` | KOC/KOL月报、用户共创复盘、活动传播月报 |
+| 核心研判行动页 | `statement_action_bar` | `statement/emphasis/action/action_highlight` | 态势研判、风险预警、战略判断、行动承接 |
+
+当前排版库只保留用户参考图或参考 PPT 沉淀出的布局。其他内容类型不在排版库中，后续由用户提供参考图/PPT 后逐个加入。
 
 #### 新增布局准入条件
 
@@ -302,13 +335,27 @@ items 数量  →  自动布局
 - 该版式能复用到一类内容，而不是只服务某一页；
 - 用户提供的参考页存在清晰结构模式，例如“三栏专题卡”“左右对比”“矩阵象限”“问题-方案-收益”。
 
-#### 用户提供图片时的整理流程
+新增布局必须按 `statement_action_bar` 的质量标准执行：
+- 优先使用用户提供的 PPTX 提取真实坐标、尺寸、字体层级、形状层级和固定视觉元素；没有 PPTX 时再用图片反推。
+- 不能只做语义骨架、近似网格或通用表格。未达到参考页视觉结构的实现只能标记为 draft/unavailable，不能登记到可用排版库。
+- 新增到 `layouts/registry.json` 时必须设置 `status: "ready"`，并设置 `fidelity: "ppt_exact"` 或已由用户验收的 `fidelity: "accepted"`。
+- 必须声明是否复用模板原有标题框；如果该布局不使用标题框，生成时必须清空模板示例标题，且不再额外绘制标题。
+- 必须区分版式本体和截图批注：红框、选择框、标注线等批注不得绘制到 PPT 中，除非用户明确要求保留。
+- 必须声明哪些视觉锚点必须保留，例如圆形图标、竖点、分割线、底部条等，不能在实现中简化或丢失。
+- 必须生成样例 PPT 验证，确认无标题重叠、无示例文字残留、无文本溢出、尾页原样保留。
 
-当用户上传一张 PPT 页面截图，并要求“把这个排版整理到排版库”时，必须按以下流程处理：
+#### 用户提供图片或 PPT 时的整理流程
+
+当用户上传 PPT 页面截图或 PPTX，并要求“把这个排版整理到排版库”时，必须按以下流程处理：
+
+0. **优先提取真实版式参数**
+   - 如果用户给的是 PPTX，优先读取页面中的 shape 坐标、尺寸、字体大小、颜色、层级和组合关系。
+   - 如果用户只给图片，先反推结构和比例；实现后必须用样例 PPT 验证并根据截图反馈修正。
 
 1. **识别版式骨架**
    - 判断页面是几栏、几区、是否有顶部总论、底部总结、图片位、数据位、流程位。
    - 只抽象结构，不绑定截图里的具体品牌、车型、日期或活动名。
+   - 标注哪些元素是版式本体，哪些只是截图批注或编辑器选择框。
 
 2. **提炼内容语义**
    - 把页面元素映射成语义字段，例如 `headline`、`columns`、`cards`、`metrics`、`quote`、`footer`。
@@ -320,6 +367,7 @@ items 数量  →  自动布局
 
 4. **登记文档**
    - 在排版库说明中加入适用场景、页面结构、标准 `content.json`、使用约束。
+   - 明确该布局是否使用模板标题框、是否要清空模板示例文本、哪些固定视觉锚点必须保留。
    - 如果是已有布局的变体，用 `_compact`、`_visual`、`_text` 命名，不要重复造新主类。
 
 5. **实现或排期实现**
@@ -337,9 +385,12 @@ items 数量  →  自动布局
 每新增一个布局，必须同时更新三处：
 
 1. **脚本实现**
-   - 在 `scripts/render_geely_report.py` 中新增 `layout_xxx(slide, body/items, start_y)`。
-   - 在 `render_content_slide()` 的 layout 分发中登记别名。
-   - 坐标必须基于安全内容区，不能遮挡模板标题、页脚、Logo。
+   - 在 `scripts/layouts_impl/<layout_name>.py` 中新增布局模块，提供 `render(slide, body, ctx, start_y, layout)`。
+   - 在 `layouts/registry.json` 中登记 `module`、`aliases`、`owns_title`、`clear_template_sample_text` 等元信息。
+   - 不要把新布局函数塞进入口脚本；入口脚本只负责模板克隆、内容调度和按需加载布局模块。
+   - 坐标优先来自参考 PPTX 的真实参数；如需适配模板安全区，只做等比或小幅修正。
+   - 如果布局声明不使用标题框，必须在模板预处理阶段清空标题和示例文本，不能让模板标题与新布局重叠。
+   - 正文坐标必须避开页脚、Logo 和模板固定品牌元素。
 
 2. **技能文档**
    - 在 `layouts/registry.json` 登记布局索引。
@@ -349,6 +400,8 @@ items 数量  →  自动布局
 3. **样例验证**
    - 至少用一个已登记模板生成样例 PPT。
    - 检查页面数量、标题、关键字段是否写入。
+   - 检查模板示例文本是否清理干净，视觉锚点是否保留，截图批注是否没有误绘制。
+   - 检查文字是否超出文本框或页面边界；不能靠不可读字号强塞。
    - 如涉及尾页，必须验证尾页 XML 原样保留。
 
 #### 命名规范
@@ -429,6 +482,41 @@ items 数量  →  自动布局
 - 如果有真实图片素材，优先填入两个素材图位；没有图片时保留浅色素材占位，不要用随机网络图。
 - 三栏标题条默认使用当前模板 `primary_color` / `accent_color`；参考图里的橙红色只作为结构示意，不能跨模板照搬。
 
+### 布局 G：核心研判行动页（statement_action_bar）
+
+适用：态势研判、风险预警、战略判断、结论承接。
+
+页面结构：
+- 该布局不使用模板内容页的顶部标题框，`page_title` 只作为目录/备注信息，不在页面顶部绘制。
+- 中部偏上：核心判断文字，拆成“前置判断 + 加粗核心结论”两层。
+- 左侧：必须保留视觉锚点，包括灰色圆形图标位和三个竖向小圆点；用户截图中的红框是批注，不属于版式，不要绘制。
+- 中部：一条细强调线。
+- 下方：黑色圆角行动条，承载下一步动作或资源规划，行动条内重点短语高亮。
+
+推荐 `content.json`：
+
+```json
+{
+  "type": "content",
+  "page_title": "核心研判",
+  "body": {
+    "layout": "statement_action_bar",
+    "statement": "基于目前产品舆论态势及竞品攻击情况进行研判——银河M9上市期间内可能会遭受更多攻击",
+    "emphasis": "银河M9上市期间内可能会遭受更多攻击",
+    "action": "需及时调整口碑维护方向及资源规划来打好这场舆论硬仗",
+    "action_highlight": "调整口碑维护方向及资源规划"
+  }
+}
+```
+
+使用约束：
+- `statement` 建议拆成前置判断和核心结论两层；`emphasis` 必须是 `statement` 中需要加粗放大的短语。
+- `action_highlight` 必须是 `action` 中需要高亮的短语。
+- 用户给出的判断和行动结论应尽量完整保留，空间不足时优先拆页，不要静默删减。
+- 不放多张图片，不放多组卡片，不承载复杂数据。
+- 字体继承当前模板字体；主体色继承当前模板 `design_tokens`。黑色行动条和高亮短语是该版式的核心视觉层级，除非模板显著冲突，否则保留。
+- 左侧视觉锚点是该布局的固定组成部分，不得简化成单个小方块或删除。
+
 ### 第6步：合并内容页
 
 ```bash
@@ -473,9 +561,9 @@ cp final_output.pptx /mnt/user-data/outputs/演示文稿.pptx
 
 ---
 
-## 内容页正文区布局参考
+## 历史脚本兜底布局参考（非排版库）
 
-以下所有布局均在 `body_zone` 定义的区域内排版，所有颜色从 `design_tokens` 读取。
+以下布局是脚本内部历史兜底能力，不属于当前排版库。当前排版库登记项以 `layouts/registry.json` 为准；其他版式等用户后续提供参考图后，再按排版库扩展机制加入。
 
 ### 布局 A：KPI 数据卡片（kpi_card）
 
@@ -937,7 +1025,9 @@ python scripts/render_style_clone_report.py content.json final_output.pptx templ
 }
 ```
 
-支持的 `body.layout`：`auto`、`kpi`/`kpi_card`、`grid`、`timeline`、`big_stat`/`quote`、`insight_onepage`/`argument_page`、`campaign_three_columns`/`operation_plan`。
+当前排版库支持的 `body.layout` 以 `layouts/registry.json` 为准。当前可用项包括：`campaign_three_columns`、`sample3_live_overall`、`sample3_ota_timeline`、`sample3_koc_monthly_summary`、`statement_action_bar`。未在 registry 中标记为 `status=ready` 的历史模块不属于排版库，不要推荐给其他模型直接使用。
+
+脚本内部仍可能保留 `auto`、`kpi`、`grid` 等历史兜底逻辑，但这些不属于排版库，不作为推荐布局对外暴露。
 
 `style_selection` 可选：
 - `rotate`：默认，内容页按模板中间风格页顺序轮换，结果稳定可复现。
@@ -982,19 +1072,14 @@ slides[].date        封面日期（如 "2026.04"）
 slides[].chapter     过渡页章节编号（如 "01"）
 slides[].items       目录页条目数组，仅 type=toc 使用
 slides[].page_title  内容页顶部标题
-slides[].body.layout auto（推荐）/ kpi_card / three_col / two_col /
-                     bullet_list / timeline / big_stat / compact_list
-slides[].body.items[].label   条目标签/小标题
-slides[].body.items[].value   大数字（有此字段时自动用 kpi_card 布局）
-slides[].body.items[].desc    描述文字
-slides[].body.items[].icon    图标名（可选，见 render_content.js ICON_MAP）
-slides[].body.insight         核心观点，insight_onepage 使用
-slides[].body.path[]          演进路径/阶段/逻辑链，insight_onepage 使用
-slides[].body.data[]          关键数据卡片，insight_onepage 使用
-slides[].body.quote           金句/结论，insight_onepage 使用
+slides[].body.layout 当前排版库登记布局名，如 campaign_three_columns / statement_action_bar
 slides[].body.headline        三栏运营规划页顶部总论，campaign_three_columns 使用
 slides[].body.columns[]       三栏运营规划页的 3 个专题列，campaign_three_columns 使用
 slides[].body.footer          三栏运营规划页底部机制总结，campaign_three_columns 使用
+slides[].body.statement       核心判断文本，statement_action_bar 使用
+slides[].body.emphasis        核心判断中需要加粗强调的部分，statement_action_bar 使用
+slides[].body.action          行动结论文本，statement_action_bar 使用
+slides[].body.action_highlight 行动结论中需要强调的短语，statement_action_bar 使用
 ```
 
 尾页规则：无论 `dual_track` 还是 `style_clone`，尾页均复用模板最后一页并原样保留。不要在 `type=end` 中写需要展示的标题、日期、THANKS 文案或署名；即使写了，生成脚本也应忽略这些字段。
@@ -1029,8 +1114,13 @@ ppt-template-skill/
 ├── layouts/
 │   ├── README.md               # 排版库使用方式与新增布局要求
 │   ├── registry.json           # 排版库索引：布局名、别名、适用类型、字段摘要
-│   ├── insight_onepage.md      # 观点论证页布局详情
-│   └── campaign_three_columns.md # 三栏运营规划页布局详情
+│   ├── specs/                  # 预编译 shape 克隆布局的字段映射
+│   ├── compiled/               # 预编译单页 PPTX 包，按需加载
+│   ├── campaign_three_columns.md # 三栏运营规划页布局详情
+│   ├── sample3_live_overall.md # 大型活动直播整体规划页布局详情
+│   ├── sample3_ota_timeline.md # OTA/传播三阶段策略页布局详情
+│   ├── sample3_koc_monthly_summary.md # KOC月度运营总结页布局详情
+│   └── statement_action_bar.md # 核心研判行动页布局详情
 ├── templates/
 │   ├── 202604-奕境用户运营PPT模版.pptx
 │   ├── 吉利模版.pptx
@@ -1058,7 +1148,18 @@ ppt-template-skill/
     ├── build_skeleton.py       # 第4步：按大纲克隆模板页
     ├── render_content.js       # 第5步：内容页正文排版（pptxgenjs）
     ├── render_style_clone_report.py # style_clone 路线：复制内容风格页并直接绘制报告页
-    ├── render_geely_report.py  # style_clone 实现脚本，默认使用内置吉利模板
+    ├── render_report.py        # 新核心入口：模板克隆 + 内容调度 + 懒加载布局
+    ├── ppt_engine/
+    │   ├── compiled_layout.py  # 预编译单页 PPTX shape 克隆 + 字段替换
+    │   ├── context.py          # design_tokens / 字体 / runtime context
+    │   ├── primitives.py       # tx/rich_tx/rect/footer/title 等基础绘制
+    │   ├── template.py         # 模板识别、克隆、标题清理、spec 读取
+    │   ├── content.py          # 目录/过渡/内容页调度
+    │   └── layout_registry.py  # 读取 layouts/registry.json 并按需 import 布局模块
+    ├── layouts_impl/
+    │   ├── basic.py            # 内部兜底布局，不属于排版库
+    │   ├── compiled_shape.py   # 通用预编译 shape 克隆布局入口
+    │   └── statement_action_bar.py
     ├── replace_text.py         # 文字替换工具（保留 XML 格式标签）
     ├── merge_content.py        # 第6步：合并内容页到骨架
     ├── add_slide.py            # 复制 slide 工具
