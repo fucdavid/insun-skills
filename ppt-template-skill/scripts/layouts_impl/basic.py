@@ -98,8 +98,5 @@ def render(slide, body, ctx, start_y=1.35, layout="grid"):
         layout_timeline(slide, body, start_y, ctx)
     elif layout == "big_stat":
         layout_big(slide, body, max(1.75, start_y), ctx)
-    elif layout == "insight_onepage":
-        layout_insight(slide, body, start_y, ctx)
     else:
         layout_grid(slide, body, start_y, ctx)
-

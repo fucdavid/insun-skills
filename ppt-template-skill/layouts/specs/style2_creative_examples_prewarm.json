@@ -1,0 +1,136 @@
+{
+  "name": "style2_creative_examples_prewarm",
+  "mode": "shape_clone_compiled",
+  "compiled_pptx": "layouts/compiled/style2_creative_examples_prewarm.pptx",
+  "source_slide": 1,
+  "fields": [
+    {
+      "shape": "文本框 18",
+      "path": "title"
+    },
+    {
+      "shape": "矩形 2",
+      "path": "summary"
+    },
+    {
+      "shape": "文本框 1",
+      "path": "example_note"
+    },
+    {
+      "shape": "文本框 30",
+      "path": "platforms"
+    },
+    {
+      "shape": "矩形 7",
+      "path": "cards[0].title"
+    },
+    {
+      "shape": "文本框 10",
+      "path": "cards[0].desc"
+    },
+    {
+      "shape": "文本框 16",
+      "path": "cards[0].format"
+    },
+    {
+      "shape": "矩形 69",
+      "path": "cards[0].example_title"
+    },
+    {
+      "shape": "矩形 68",
+      "path": "cards[0].comment"
+    },
+    {
+      "shape": "矩形 14",
+      "path": "cards[1].title"
+    },
+    {
+      "shape": "文本框 29",
+      "path": "cards[1].desc"
+    },
+    {
+      "shape": "文本框 28",
+      "path": "cards[1].format"
+    },
+    {
+      "shape": "矩形 63",
+      "path": "cards[1].example_title"
+    },
+    {
+      "shape": "矩形 62",
+      "path": "cards[1].comment"
+    },
+    {
+      "shape": "矩形 8",
+      "path": "cards[2].title"
+    },
+    {
+      "shape": "文本框 25",
+      "path": "cards[2].desc"
+    },
+    {
+      "shape": "文本框 31",
+      "path": "cards[2].format"
+    },
+    {
+      "shape": "矩形 21",
+      "path": "cards[2].example_title"
+    },
+    {
+      "shape": "矩形 20",
+      "path": "cards[2].comment"
+    }
+  ],
+  "image_fields": [
+    {
+      "shape": "图片 27",
+      "path": "creative_images[0]",
+      "label": "Image 1"
+    },
+    {
+      "shape": "图片 23",
+      "path": "creative_images[1]",
+      "label": "Image 2"
+    },
+    {
+      "shape": "图片 24",
+      "path": "creative_images[2]",
+      "label": "Image 3"
+    },
+    {
+      "shape": "图片 19",
+      "path": "creative_images[3]",
+      "label": "Image 4"
+    },
+    {
+      "shape": "图片 26",
+      "path": "creative_images[4]",
+      "label": "Image 5"
+    },
+    {
+      "shape": "Picture 10",
+      "path": "creative_images[5]",
+      "label": "Image 6"
+    },
+    {
+      "shape": "图片 39",
+      "path": "creative_images[6]",
+      "label": "Image 7"
+    },
+    {
+      "shape": "图片 46",
+      "path": "creative_images[7]",
+      "label": "Image 8"
+    },
+    {
+      "shape": "图片 56",
+      "path": "creative_images[8]",
+      "label": "Image 9"
+    },
+    {
+      "shape": "图片 22",
+      "path": "creative_images[9]",
+      "label": "Image 10"
+    }
+  ]
+}

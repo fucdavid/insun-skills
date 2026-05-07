@@ -1,0 +1,80 @@
+{
+  "name": "sample_attack_handling_gallery",
+  "mode": "shape_clone_compiled",
+  "compiled_pptx": "layouts/compiled/sample_attack_handling_gallery.pptx",
+  "source_slide": 1,
+  "fields": [
+    {
+      "shape": "文本框 3",
+      "path": "_page_title"
+    },
+    {
+      "shape": "文本框 4",
+      "path": "summary"
+    },
+    {
+      "shape": "矩形 26",
+      "path": "section_labels[0]"
+    },
+    {
+      "shape": "矩形 28",
+      "path": "section_labels[1]"
+    },
+    {
+      "shape": "矩形 2",
+      "path": "section_labels[2]"
+    },
+    {
+      "shape": "文本框 36",
+      "path": "delete_label"
+    },
+    {
+      "shape": "文本框 7",
+      "path": "cards[0].title"
+    },
+    {
+      "shape": "文本框 12",
+      "path": "cards[1].title"
+    },
+    {
+      "shape": "文本框 16",
+      "path": "cards[2].title"
+    },
+    {
+      "shape": "矩形 11",
+      "path": "cards[0].result"
+    },
+    {
+      "shape": "文本框 20",
+      "path": "time_period"
+    }
+  ],
+  "table_fields": [
+    {
+      "shape": "表格 19",
+      "path": "handling_table"
+    }
+  ],
+  "image_fields": [
+    {
+      "shape": "图片 14",
+      "path": "cards[0].image",
+      "label": "Image 1"
+    },
+    {
+      "shape": "图片 13",
+      "path": "cards[1].image",
+      "label": "Image 2"
+    },
+    {
+      "shape": "图片 18",
+      "path": "cards[2].image",
+      "label": "Image 3"
+    },
+    {
+      "shape": "图片 8",
+      "path": "extra_images[0]",
+      "label": "Image 4"
+    }
+  ]
+}

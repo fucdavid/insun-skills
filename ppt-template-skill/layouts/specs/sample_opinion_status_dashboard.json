@@ -1,0 +1,105 @@
+{
+  "name": "sample_opinion_status_dashboard",
+  "mode": "shape_clone_compiled",
+  "compiled_pptx": "layouts/compiled/sample_opinion_status_dashboard.pptx",
+  "source_slide": 1,
+  "fields": [
+    {
+      "shape": "文本框 6",
+      "path": "_page_title"
+    },
+    {
+      "shape": "文本框 7",
+      "path": "summary"
+    },
+    {
+      "shape": "矩形 49",
+      "path": "left_title"
+    },
+    {
+      "shape": "矩形 13",
+      "path": "right_title"
+    },
+    {
+      "shape": "矩形 3",
+      "path": "overall_summary"
+    },
+    {
+      "shape": "文本框 65",
+      "path": "positive_label"
+    },
+    {
+      "shape": "文本框 66",
+      "path": "negative_label"
+    },
+    {
+      "shape": "矩形: 圆角 36",
+      "path": "positive_rate"
+    },
+    {
+      "shape": "矩形: 圆角 36",
+      "path": "negative_rate"
+    },
+    {
+      "shape": "文本框 26",
+      "path": "positive_view_title"
+    },
+    {
+      "shape": "文本框 27",
+      "path": "negative_view_title"
+    },
+    {
+      "shape": "圆角矩形 24",
+      "path": "positive_views"
+    },
+    {
+      "shape": "圆角矩形 25",
+      "path": "negative_views"
+    },
+    {
+      "shape": "文本框 29",
+      "path": "negative_examples_title"
+    },
+    {
+      "shape": "矩形 15",
+      "path": "handling_result"
+    }
+  ],
+  "image_fields": [
+    {
+      "shape": "图片 17",
+      "path": "left_images[0]",
+      "label": "Image 1"
+    },
+    {
+      "shape": "图片 18",
+      "path": "left_images[1]",
+      "label": "Image 2"
+    },
+    {
+      "shape": "图片 16",
+      "path": "left_images[2]",
+      "label": "Image 3"
+    },
+    {
+      "shape": "图片 30",
+      "path": "negative_images[0]",
+      "label": "Image 4"
+    },
+    {
+      "shape": "图片 32",
+      "path": "negative_images[1]",
+      "label": "Image 5"
+    },
+    {
+      "shape": "图片 33",
+      "path": "negative_images[2]",
+      "label": "Image 6"
+    },
+    {
+      "shape": "图片 34",
+      "path": "negative_images[3]",
+      "label": "Image 7"
+    }
+  ]
+}

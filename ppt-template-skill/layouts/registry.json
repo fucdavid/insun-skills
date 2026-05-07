@@ -1,5 +1,5 @@
 {
-  "version": "1.6",
+  "version": "1.8",
   "progressive_disclosure": true,
   "rules": [
     "先根据 content_type 选择布局，再加载 detail_file。",
@@ -13,9 +13,16 @@
   "layouts": [
     {
       "name": "campaign_three_columns",
-      "aliases": ["campaign_columns", "operation_plan"],
+      "aliases": [
+        "campaign_columns",
+        "operation_plan"
+      ],
       "content_type": "运营规划三栏页",
-      "fields": ["headline", "columns[]", "footer"],
+      "fields": [
+        "headline",
+        "columns[]",
+        "footer"
+      ],
       "limit": "固定 3 栏；少于或多于 3 栏不要使用。",
       "detail_file": "campaign_three_columns.md",
       "module": "compiled_shape",
@@ -30,9 +37,20 @@
     },
     {
       "name": "sample3_live_overall",
-      "aliases": ["event_live_overall", "live_overall_plan"],
+      "aliases": [
+        "event_live_overall",
+        "live_overall_plan"
+      ],
       "content_type": "大型活动直播整体规划页",
-      "fields": ["title", "banner", "purpose", "strategy", "benefit", "video_items_left", "video_items_right"],
+      "fields": [
+        "title",
+        "banner",
+        "purpose",
+        "strategy",
+        "benefit",
+        "video_items_left",
+        "video_items_right"
+      ],
       "limit": "活动直播总览页；适合目的/策略/直播线/视频线结构。",
       "detail_file": "sample3_live_overall.md",
       "module": "compiled_shape",
@@ -47,9 +65,19 @@
     },
     {
       "name": "sample3_ota_timeline",
-      "aliases": ["ota_strategy_timeline", "ota_timeline"],
+      "aliases": [
+        "ota_strategy_timeline",
+        "ota_timeline"
+      ],
       "content_type": "OTA/传播三阶段策略页",
-      "fields": ["title", "summary", "dimensions[]", "theme", "stages[]", "fee"],
+      "fields": [
+        "title",
+        "summary",
+        "dimensions[]",
+        "theme",
+        "stages[]",
+        "fee"
+      ],
       "limit": "2 个目标维度 + 3 个阶段策略 + 费用/资源说明；阶段数量固定为 3。",
       "detail_file": "sample3_ota_timeline.md",
       "module": "compiled_shape",
@@ -64,9 +92,18 @@
     },
     {
       "name": "sample3_koc_monthly_summary",
-      "aliases": ["koc_monthly_summary", "monthly_koc_dashboard"],
+      "aliases": [
+        "koc_monthly_summary",
+        "monthly_koc_dashboard"
+      ],
       "content_type": "KOC月度运营总结页",
-      "fields": ["title", "summary", "metrics[]", "topics[]", "issue"],
+      "fields": [
+        "title",
+        "summary",
+        "metrics[]",
+        "topics[]",
+        "issue"
+      ],
       "limit": "顶部总述 + 左侧核心数据 + 右侧重点事项 + 底部课题；信息过密时拆页。",
       "detail_file": "sample3_koc_monthly_summary.md",
       "module": "compiled_shape",
@@ -81,14 +118,544 @@
     },
     {
       "name": "statement_action_bar",
-      "aliases": ["judgement_action", "core_statement_action"],
+      "aliases": [
+        "judgement_action",
+        "core_statement_action"
+      ],
       "content_type": "核心研判行动页",
-      "fields": ["statement", "emphasis", "action", "action_highlight"],
+      "fields": [
+        "statement",
+        "emphasis",
+        "action",
+        "action_highlight"
+      ],
       "limit": "1 个核心判断 + 1 条行动结论；不使用模板标题框；必须保留左侧圆形图标和三个竖点锚点。",
       "detail_file": "statement_action_bar.md",
       "module": "statement_action_bar",
       "status": "ready",
       "fidelity": "ppt_exact",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "sample_opinion_data_overview",
+      "aliases": [
+        "opinion_data_overview",
+        "communication_data_overview"
+      ],
+      "content_type": "重点车型投入",
+      "fields": [
+        "_page_title",
+        "period_note",
+        "data_title",
+        "propagation_table",
+        "comment_table",
+        "left_images[]",
+        "right_images[]"
+      ],
+      "limit": "Use for communication/opinion data overview with two KPI tables and two evidence image zones.",
+      "detail_file": "sample_opinion_data_overview.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版示例.pptx",
+      "source_slide": 1,
+      "spec_file": "specs/sample_opinion_data_overview.json",
+      "compiled_pptx": "compiled/sample_opinion_data_overview.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "sample_attack_handling_gallery",
+      "aliases": [
+        "attack_handling_gallery",
+        "negative_handling_gallery"
+      ],
+      "content_type": "重点车型车黑打击情况一览",
+      "fields": [
+        "_page_title",
+        "summary",
+        "handling_table",
+        "cards[].title",
+        "cards[].result",
+        "cards[].image",
+        "time_period"
+      ],
+      "limit": "Use for negative handling or black-account attack evidence with one data table and three evidence cards.",
+      "detail_file": "sample_attack_handling_gallery.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版示例.pptx",
+      "source_slide": 2,
+      "spec_file": "specs/sample_attack_handling_gallery.json",
+      "compiled_pptx": "compiled/sample_attack_handling_gallery.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "sample_presale_data_split",
+      "aliases": [
+        "presale_data_split",
+        "opinion_split_two_panels"
+      ],
+      "content_type": "重点车型投入拆解",
+      "fields": [
+        "_page_title",
+        "period_note",
+        "data_title",
+        "left_panel",
+        "right_panel"
+      ],
+      "limit": "Use for before/after presale data split or two-panel opinion data breakdown.",
+      "detail_file": "sample_presale_data_split.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版示例.pptx",
+      "source_slide": 3,
+      "spec_file": "specs/sample_presale_data_split.json",
+      "compiled_pptx": "compiled/sample_presale_data_split.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "sample_opinion_status_dashboard",
+      "aliases": [
+        "opinion_status_dashboard",
+        "sentiment_status_dashboard"
+      ],
+      "content_type": "重点产品舆情现状",
+      "fields": [
+        "_page_title",
+        "summary",
+        "overall_summary",
+        "positive_rate",
+        "negative_rate",
+        "positive_views",
+        "negative_views",
+        "handling_result",
+        "negative_images[]"
+      ],
+      "limit": "Use for opinion status dashboard with overall data, positive/negative ratio and negative examples.",
+      "detail_file": "sample_opinion_status_dashboard.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版示例.pptx",
+      "source_slide": 4,
+      "spec_file": "specs/sample_opinion_status_dashboard.json",
+      "compiled_pptx": "compiled/sample_opinion_status_dashboard.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "sample_comment_quality_dual_path",
+      "aliases": [
+        "comment_quality_dual_path",
+        "comment_quality_matrix"
+      ],
+      "content_type": "上市期间核心策略举措1",
+      "fields": [
+        "_page_title",
+        "summary",
+        "theme",
+        "quality_bar",
+        "categories[]",
+        "left_path",
+        "right_path",
+        "left_result",
+        "right_result",
+        "category_images[]"
+      ],
+      "limit": "Use for comment-quality improvement paths with category evidence and dual-path conclusions.",
+      "detail_file": "sample_comment_quality_dual_path.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版示例.pptx",
+      "source_slide": 5,
+      "spec_file": "specs/sample_comment_quality_dual_path.json",
+      "compiled_pptx": "compiled/sample_comment_quality_dual_path.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "sample_launch_strategy_three_actions",
+      "aliases": [
+        "launch_strategy_three_actions",
+        "three_action_strategy"
+      ],
+      "content_type": "上市期间核心策略举措1",
+      "fields": [
+        "_page_title",
+        "summary",
+        "action1",
+        "action2",
+        "action3",
+        "classification_table",
+        "bottom_note"
+      ],
+      "limit": "Use for launch-period strategy with action 1, action 2 and action 3 plus classification table.",
+      "detail_file": "sample_launch_strategy_three_actions.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版示例.pptx",
+      "source_slide": 6,
+      "spec_file": "specs/sample_launch_strategy_three_actions.json",
+      "compiled_pptx": "compiled/sample_launch_strategy_three_actions.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "sample_value_breakthrough_dual_columns",
+      "aliases": [
+        "value_breakthrough_dual_columns",
+        "dual_value_path"
+      ],
+      "content_type": "上市期间核心策略举措2",
+      "fields": [
+        "_page_title",
+        "summary",
+        "theme",
+        "left_column",
+        "right_column"
+      ],
+      "limit": "Use for dual-column value breakthrough: rational value vs emotional value paths.",
+      "detail_file": "sample_value_breakthrough_dual_columns.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版示例.pptx",
+      "source_slide": 7,
+      "spec_file": "specs/sample_value_breakthrough_dual_columns.json",
+      "compiled_pptx": "compiled/sample_value_breakthrough_dual_columns.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "sample_positive_spread_gallery",
+      "aliases": [
+        "positive_spread_gallery",
+        "spread_gallery_two_topics"
+      ],
+      "content_type": "上市期间核心策略举措2",
+      "fields": [
+        "_page_title",
+        "summary",
+        "left_topic",
+        "right_topic",
+        "target"
+      ],
+      "limit": "Use for positive communication gallery with two content topics and numeric target.",
+      "detail_file": "sample_positive_spread_gallery.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版示例.pptx",
+      "source_slide": 8,
+      "spec_file": "specs/sample_positive_spread_gallery.json",
+      "compiled_pptx": "compiled/sample_positive_spread_gallery.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "style2_background_strengths",
+      "aliases": [
+        "style2_strengths",
+        "background_strengths"
+      ],
+      "content_type": "Background insight - three strengths",
+      "fields": [
+        "title",
+        "core_advantage",
+        "cards[]"
+      ],
+      "limit": "Use for one core advantage statement plus exactly 3 strength cards.",
+      "detail_file": "style2_background_strengths.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版样式2.pptx",
+      "source_slide": 1,
+      "spec_file": "specs/style2_background_strengths.json",
+      "compiled_pptx": "compiled/style2_background_strengths.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "style2_background_challenges",
+      "aliases": [
+        "style2_challenges",
+        "background_challenges"
+      ],
+      "content_type": "Background insight - three challenges",
+      "fields": [
+        "title",
+        "challenge_summary",
+        "challenges[]"
+      ],
+      "limit": "Use for one challenge summary plus exactly 3 challenge cards.",
+      "detail_file": "style2_background_challenges.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版样式2.pptx",
+      "source_slide": 2,
+      "spec_file": "specs/style2_background_challenges.json",
+      "compiled_pptx": "compiled/style2_background_challenges.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "style2_overall_strategy_timeline",
+      "aliases": [
+        "style2_strategy_timeline",
+        "three_stage_strategy"
+      ],
+      "content_type": "Overall strategy with three-stage timeline",
+      "fields": [
+        "title",
+        "summary",
+        "strategy_title",
+        "core_point_label",
+        "core_point",
+        "explanation",
+        "stages[]"
+      ],
+      "limit": "Use for one strategic theme and exactly 3 stage plans.",
+      "detail_file": "style2_overall_strategy_timeline.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版样式2.pptx",
+      "source_slide": 3,
+      "spec_file": "specs/style2_overall_strategy_timeline.json",
+      "compiled_pptx": "compiled/style2_overall_strategy_timeline.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "style2_execution_plan_prewarm",
+      "aliases": [
+        "style2_plan_prewarm",
+        "prewarm_execution_plan"
+      ],
+      "content_type": "Execution plan table - prewarm phase",
+      "fields": [
+        "title",
+        "phase",
+        "goal",
+        "goal_detail",
+        "strategy",
+        "strategy_detail",
+        "directions[]",
+        "titles[]",
+        "formats[]",
+        "volumes[]"
+      ],
+      "limit": "Use for execution plan with 4 directions and title examples.",
+      "detail_file": "style2_execution_plan_prewarm.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版样式2.pptx",
+      "source_slide": 4,
+      "spec_file": "specs/style2_execution_plan_prewarm.json",
+      "compiled_pptx": "compiled/style2_execution_plan_prewarm.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "style2_creative_examples_prewarm",
+      "aliases": [
+        "style2_examples_prewarm",
+        "prewarm_three_cards"
+      ],
+      "content_type": "Creative examples - three cards prewarm",
+      "fields": [
+        "title",
+        "summary",
+        "example_note",
+        "platforms",
+        "cards[]"
+      ],
+      "limit": "Use for exactly 3 creative examples with title, format, description and comment seeding.",
+      "detail_file": "style2_creative_examples_prewarm.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版样式2.pptx",
+      "source_slide": 5,
+      "spec_file": "specs/style2_creative_examples_prewarm.json",
+      "compiled_pptx": "compiled/style2_creative_examples_prewarm.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "style2_execution_plan_burst",
+      "aliases": [
+        "style2_plan_burst",
+        "burst_execution_plan"
+      ],
+      "content_type": "Execution plan table - burst phase",
+      "fields": [
+        "title",
+        "phase",
+        "goal",
+        "goal_detail",
+        "strategy",
+        "strategy_detail",
+        "directions[]",
+        "titles[]",
+        "formats[]",
+        "volumes[]"
+      ],
+      "limit": "Use for launch/burst phase execution plan with 5 directions.",
+      "detail_file": "style2_execution_plan_burst.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版样式2.pptx",
+      "source_slide": 6,
+      "spec_file": "specs/style2_execution_plan_burst.json",
+      "compiled_pptx": "compiled/style2_execution_plan_burst.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "style2_creative_examples_burst",
+      "aliases": [
+        "style2_examples_burst",
+        "burst_three_cards"
+      ],
+      "content_type": "Creative examples - three cards burst",
+      "fields": [
+        "title",
+        "summary",
+        "example_note",
+        "platforms",
+        "cards[]"
+      ],
+      "limit": "Use for exactly 3 burst-phase creative examples.",
+      "detail_file": "style2_creative_examples_burst.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版样式2.pptx",
+      "source_slide": 7,
+      "spec_file": "specs/style2_creative_examples_burst.json",
+      "compiled_pptx": "compiled/style2_creative_examples_burst.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "style2_execution_plan_longtail",
+      "aliases": [
+        "style2_plan_longtail",
+        "longtail_execution_plan"
+      ],
+      "content_type": "Execution plan table - longtail phase",
+      "fields": [
+        "title",
+        "phase",
+        "goal",
+        "goal_detail",
+        "strategy",
+        "strategy_detail",
+        "directions[]",
+        "titles[]",
+        "formats[]",
+        "volumes[]"
+      ],
+      "limit": "Use for longtail phase execution plan with 4 directions.",
+      "detail_file": "style2_execution_plan_longtail.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版样式2.pptx",
+      "source_slide": 8,
+      "spec_file": "specs/style2_execution_plan_longtail.json",
+      "compiled_pptx": "compiled/style2_execution_plan_longtail.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "style2_creative_examples_longtail",
+      "aliases": [
+        "style2_examples_longtail",
+        "longtail_three_cards"
+      ],
+      "content_type": "Creative examples - three cards longtail",
+      "fields": [
+        "title",
+        "summary",
+        "example_note",
+        "platforms",
+        "cards[]"
+      ],
+      "limit": "Use for exactly 3 longtail creative examples.",
+      "detail_file": "style2_creative_examples_longtail.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版样式2.pptx",
+      "source_slide": 9,
+      "spec_file": "specs/style2_creative_examples_longtail.json",
+      "compiled_pptx": "compiled/style2_creative_examples_longtail.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "style2_risk_response_matrix",
+      "aliases": [
+        "style2_risk_matrix",
+        "risk_response_matrix"
+      ],
+      "content_type": "Risk forecast and response matrix",
+      "fields": [
+        "title",
+        "summary",
+        "column_labels[]",
+        "risk_subjects[]",
+        "risk_forecasts[]",
+        "response_strategies[]",
+        "actions[]",
+        "monitoring_guidance[]"
+      ],
+      "limit": "Use for 4 risk subjects across forecast/strategy/action/monitoring columns.",
+      "detail_file": "style2_risk_response_matrix.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版样式2.pptx",
+      "source_slide": 10,
+      "spec_file": "specs/style2_risk_response_matrix.json",
+      "compiled_pptx": "compiled/style2_risk_response_matrix.pptx",
+      "owns_title": true,
+      "clear_template_sample_text": true
+    },
+    {
+      "name": "style2_judgement_action_bar",
+      "aliases": [
+        "style2_judgement_action",
+        "judgement_action_bar"
+      ],
+      "content_type": "Core judgement and action bar",
+      "fields": [
+        "judgement",
+        "action"
+      ],
+      "limit": "Use for one core judgement plus one action conclusion; keep icon anchor.",
+      "detail_file": "style2_judgement_action_bar.md",
+      "module": "compiled_shape",
+      "status": "ready",
+      "fidelity": "ppt_exact",
+      "source_file": "排版样式2.pptx",
+      "source_slide": 11,
+      "spec_file": "specs/style2_judgement_action_bar.json",
+      "compiled_pptx": "compiled/style2_judgement_action_bar.pptx",
       "owns_title": true,
       "clear_template_sample_text": true
     }

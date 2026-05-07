@@ -200,7 +200,7 @@ def render_transition_slide(slide, slide_data, page_num, source, ctx):
 def infer_auto_layout(body):
     items = body.get("items", [])
     if body.get("quote") and (body.get("path") or body.get("evolution") or body.get("data") or body.get("insight")):
-        return "insight_onepage"
+        return "grid"
     if any(item.get("value") for item in items):
         return "kpi"
     if len(items) == 4 and body.get("timeline"):

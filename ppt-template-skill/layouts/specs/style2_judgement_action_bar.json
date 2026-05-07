@@ -1,0 +1,23 @@
+{
+  "name": "style2_judgement_action_bar",
+  "mode": "shape_clone_compiled",
+  "compiled_pptx": "layouts/compiled/style2_judgement_action_bar.pptx",
+  "source_slide": 1,
+  "fields": [
+    {
+      "shape": "文本框 14",
+      "path": "judgement"
+    },
+    {
+      "shape": "圆角矩形 1",
+      "path": "action"
+    }
+  ],
+  "image_fields": [
+    {
+      "shape": "图形 34",
+      "path": "anchor_images[0]",
+      "label": "Image 1"
+    }
+  ]
+}

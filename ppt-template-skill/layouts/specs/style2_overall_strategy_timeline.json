@@ -1,0 +1,69 @@
+{
+  "name": "style2_overall_strategy_timeline",
+  "mode": "shape_clone_compiled",
+  "compiled_pptx": "layouts/compiled/style2_overall_strategy_timeline.pptx",
+  "source_slide": 1,
+  "fields": [
+    {
+      "shape": "文本框 18",
+      "path": "title"
+    },
+    {
+      "shape": "矩形 89",
+      "path": "summary"
+    },
+    {
+      "shape": "文本框 10",
+      "path": "strategy_title"
+    },
+    {
+      "shape": "圆角矩形 12",
+      "path": "core_point_label"
+    },
+    {
+      "shape": "矩形 13",
+      "path": "core_point"
+    },
+    {
+      "shape": "文本框 14",
+      "path": "explanation"
+    },
+    {
+      "shape": "矩形 16",
+      "path": "stages[0].period"
+    },
+    {
+      "shape": "文本框 21",
+      "path": "stages[0].theme"
+    },
+    {
+      "shape": "文本框 24",
+      "path": "stages[0].goal"
+    },
+    {
+      "shape": "矩形 17",
+      "path": "stages[1].period"
+    },
+    {
+      "shape": "文本框 22",
+      "path": "stages[1].theme"
+    },
+    {
+      "shape": "文本框 25",
+      "path": "stages[1].goal"
+    },
+    {
+      "shape": "矩形 19",
+      "path": "stages[2].period"
+    },
+    {
+      "shape": "文本框 23",
+      "path": "stages[2].theme"
+    },
+    {
+      "shape": "文本框 26",
+      "path": "stages[2].goal"
+    }
+  ],
+  "image_fields": []
+}

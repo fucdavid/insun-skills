@@ -1,0 +1,106 @@
+{
+  "name": "style2_background_challenges",
+  "mode": "shape_clone_compiled",
+  "compiled_pptx": "layouts/compiled/style2_background_challenges.pptx",
+  "source_slide": 1,
+  "fields": [
+    {
+      "shape": "文本框 18",
+      "path": "title"
+    },
+    {
+      "shape": "矩形 89",
+      "path": "challenge_summary"
+    },
+    {
+      "shape": "矩形 2",
+      "path": "challenges[0].title"
+    },
+    {
+      "shape": "矩形 1",
+      "path": "challenges[0].detail"
+    },
+    {
+      "shape": "文本框 20",
+      "path": "challenges[0].quote"
+    },
+    {
+      "shape": "矩形 5",
+      "path": "challenges[1].title"
+    },
+    {
+      "shape": "矩形 11",
+      "path": "challenges[1].detail"
+    },
+    {
+      "shape": "矩形 13",
+      "path": "challenges[2].title"
+    },
+    {
+      "shape": "矩形 14",
+      "path": "challenges[2].detail"
+    }
+  ],
+  "image_fields": [
+    {
+      "shape": "图片 3",
+      "path": "challenge_images[0]",
+      "label": "Image 1"
+    },
+    {
+      "shape": "图片 4",
+      "path": "challenge_images[1]",
+      "label": "Image 2"
+    },
+    {
+      "shape": "图片 6",
+      "path": "challenge_images[2]",
+      "label": "Image 3"
+    },
+    {
+      "shape": "图片 7",
+      "path": "challenge_images[3]",
+      "label": "Image 4"
+    },
+    {
+      "shape": "图片 8",
+      "path": "challenge_images[4]",
+      "label": "Image 5"
+    },
+    {
+      "shape": "图片 9",
+      "path": "challenge_images[5]",
+      "label": "Image 6"
+    },
+    {
+      "shape": "图片 10",
+      "path": "challenge_images[6]",
+      "label": "Image 7"
+    },
+    {
+      "shape": "图片 15",
+      "path": "challenge_images[7]",
+      "label": "Image 8"
+    },
+    {
+      "shape": "图片 17",
+      "path": "challenge_images[8]",
+      "label": "Image 9"
+    },
+    {
+      "shape": "图片 19",
+      "path": "challenge_images[9]",
+      "label": "Image 10"
+    },
+    {
+      "shape": "图片 22",
+      "path": "challenge_images[10]",
+      "label": "Image 11"
+    },
+    {
+      "shape": "图片 23",
+      "path": "challenge_images[11]",
+      "label": "Image 12"
+    }
+  ]
+}

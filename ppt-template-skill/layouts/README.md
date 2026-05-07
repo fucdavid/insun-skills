@@ -42,3 +42,19 @@
 - 使用语义化名称，例如 `campaign_three_columns`、`statement_action_bar`。
 - 不使用品牌名、车型名、项目名或截图文件名。
 - 变体使用后缀：`_compact`、`_visual`、`_text`。
+## Current Ready Layouts
+
+- `campaign_three_columns`: 运营规划三栏页 | fields: headline, columns[], footer
+- `sample3_live_overall`: 大型活动直播整体规划页 | fields: title, banner, purpose, strategy, benefit, video_items_left, video_items_right
+- `sample3_ota_timeline`: OTA/传播三阶段策略页 | fields: title, summary, dimensions[], theme, stages[], fee
+- `sample3_koc_monthly_summary`: KOC月度运营总结页 | fields: title, summary, metrics[], topics[], issue
+- `statement_action_bar`: 核心研判行动页 | fields: statement, emphasis, action, action_highlight
+- `sample_opinion_data_overview`: 重点车型投入 | fields: _page_title, period_note, data_title, propagation_table, comment_table, left_images[], right_images[]
+- `sample_attack_handling_gallery`: 重点车型车黑打击情况一览 | fields: _page_title, summary, handling_table, cards[].title, cards[].result, cards[].image, time_period
+- `sample_presale_data_split`: 重点车型投入拆解 | fields: _page_title, period_note, data_title, left_panel, right_panel
+- `sample_opinion_status_dashboard`: 重点产品舆情现状 | fields: _page_title, summary, overall_summary, positive_rate, negative_rate, positive_views, negative_views, handling_result, negative_images[]
+- `sample_comment_quality_dual_path`: 上市期间核心策略举措1 | fields: _page_title, summary, theme, quality_bar, categories[], left_path, right_path, left_result, right_result, category_images[]
+- `sample_launch_strategy_three_actions`: 上市期间核心策略举措1 | fields: _page_title, summary, action1, action2, action3, classification_table, bottom_note
+- `sample_value_breakthrough_dual_columns`: 上市期间核心策略举措2 | fields: _page_title, summary, theme, left_column, right_column
+- `sample_positive_spread_gallery`: 上市期间核心策略举措2 | fields: _page_title, summary, left_topic, right_topic, target
+

@@ -1,0 +1,88 @@
+{
+  "name": "sample_presale_data_split",
+  "mode": "shape_clone_compiled",
+  "compiled_pptx": "layouts/compiled/sample_presale_data_split.pptx",
+  "source_slide": 1,
+  "fields": [
+    {
+      "shape": "文本框 3",
+      "path": "_page_title"
+    },
+    {
+      "shape": "文本框 4",
+      "path": "period_note"
+    },
+    {
+      "shape": "文本框 10",
+      "path": "data_title"
+    },
+    {
+      "shape": "文本框 31",
+      "path": "right_panel.title"
+    },
+    {
+      "shape": "文本框 36",
+      "path": "right_panel.rate"
+    },
+    {
+      "shape": "圆角矩形 13",
+      "path": "right_panel.callout"
+    },
+    {
+      "shape": "矩形 25",
+      "path": "right_panel.summary"
+    }
+  ],
+  "table_fields": [
+    {
+      "shape": "表格 2",
+      "path": "left_panel.table"
+    },
+    {
+      "shape": "表格 5",
+      "path": "right_panel.table"
+    }
+  ],
+  "image_fields": [
+    {
+      "shape": "图片 19",
+      "path": "left_panel.images[0]",
+      "label": "Image 1"
+    },
+    {
+      "shape": "图片 20",
+      "path": "left_panel.images[1]",
+      "label": "Image 2"
+    },
+    {
+      "shape": "图片 18",
+      "path": "left_panel.images[2]",
+      "label": "Image 3"
+    },
+    {
+      "shape": "图片 28",
+      "path": "left_panel.images[3]",
+      "label": "Image 4"
+    },
+    {
+      "shape": "图片 29",
+      "path": "right_panel.images[0]",
+      "label": "Image 5"
+    },
+    {
+      "shape": "图片 22",
+      "path": "right_panel.images[1]",
+      "label": "Image 6"
+    },
+    {
+      "shape": "图片 23",
+      "path": "right_panel.images[2]",
+      "label": "Image 7"
+    },
+    {
+      "shape": "图片 12",
+      "path": "right_panel.images[3]",
+      "label": "Image 8"
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "name": "style2_execution_plan_longtail",
+  "mode": "shape_clone_compiled",
+  "compiled_pptx": "layouts/compiled/style2_execution_plan_longtail.pptx",
+  "source_slide": 1,
+  "fields": [
+    {
+      "shape": "文本框 18",
+      "path": "title"
+    },
+    {
+      "shape": "箭头: 五边形 1",
+      "path": "phase"
+    },
+    {
+      "shape": "矩形 1",
+      "path": "goal_label"
+    },
+    {
+      "shape": "矩形 11",
+      "path": "goal"
+    },
+    {
+      "shape": "矩形 15",
+      "path": "goal_detail"
+    },
+    {
+      "shape": "矩形 16",
+      "path": "strategy_label"
+    },
+    {
+      "shape": "矩形 23",
+      "path": "strategy"
+    },
+    {
+      "shape": "矩形 25",
+      "path": "strategy_detail"
+    },
+    {
+      "shape": "矩形 27",
+      "path": "directions_label"
+    },
+    {
+      "shape": "矩形 29",
+      "path": "directions[0]"
+    },
+    {
+      "shape": "矩形 30",
+      "path": "directions[1]"
+    },
+    {
+      "shape": "矩形 42",
+      "path": "directions[2]"
+    },
+    {
+      "shape": "矩形 43",
+      "path": "directions[3]"
+    },
+    {
+      "shape": "矩形 32",
+      "path": "title_examples_label"
+    },
+    {
+      "shape": "矩形 31",
+      "path": "titles[0]"
+    },
+    {
+      "shape": "矩形 33",
+      "path": "titles[1]"
+    },
+    {
+      "shape": "矩形 47",
+      "path": "titles[2]"
+    },
+    {
+      "shape": "矩形 48",
+      "path": "titles[3]"
+    },
+    {
+      "shape": "矩形 50",
+      "path": "titles[4]"
+    },
+    {
+      "shape": "矩形 51",
+      "path": "titles[5]"
+    },
+    {
+      "shape": "矩形 52",
+      "path": "titles[6]"
+    },
+    {
+      "shape": "矩形 53",
+      "path": "titles[7]"
+    },
+    {
+      "shape": "矩形 54",
+      "path": "titles[8]"
+    },
+    {
+      "shape": "矩形 40",
+      "path": "titles[9]"
+    },
+    {
+      "shape": "矩形 35",
+      "path": "formats_label"
+    },
+    {
+      "shape": "矩形 34",
+      "path": "formats[0]"
+    },
+    {
+      "shape": "矩形 36",
+      "path": "formats[1]"
+    },
+    {
+      "shape": "矩形 37",
+      "path": "formats[2]"
+    },
+    {
+      "shape": "矩形 38",
+      "path": "volumes_label"
+    },
+    {
+      "shape": "矩形 39",
+      "path": "volumes[0]"
+    }
+  ],
+  "image_fields": []
+}

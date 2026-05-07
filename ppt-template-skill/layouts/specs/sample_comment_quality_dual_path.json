@@ -1,0 +1,130 @@
+{
+  "name": "sample_comment_quality_dual_path",
+  "mode": "shape_clone_compiled",
+  "compiled_pptx": "layouts/compiled/sample_comment_quality_dual_path.pptx",
+  "source_slide": 1,
+  "fields": [
+    {
+      "shape": "文本框 6",
+      "path": "_page_title"
+    },
+    {
+      "shape": "文本框 7",
+      "path": "summary"
+    },
+    {
+      "shape": "矩形 8",
+      "path": "theme"
+    },
+    {
+      "shape": "圆角矩形 5",
+      "path": "quality_bar"
+    },
+    {
+      "shape": "文本框 30",
+      "path": "categories[0]"
+    },
+    {
+      "shape": "文本框 32",
+      "path": "categories[1]"
+    },
+    {
+      "shape": "文本框 34",
+      "path": "categories[2]"
+    },
+    {
+      "shape": "文本框 18",
+      "path": "categories[3]"
+    },
+    {
+      "shape": "文本框 36",
+      "path": "categories[4]"
+    },
+    {
+      "shape": "文本框 14",
+      "path": "left_side_label"
+    },
+    {
+      "shape": "平行四边形 46",
+      "path": "left_path"
+    },
+    {
+      "shape": "平行四边形 45",
+      "path": "right_path"
+    },
+    {
+      "shape": "矩形 13",
+      "path": "left_result"
+    },
+    {
+      "shape": "文本框 15",
+      "path": "right_side_label"
+    },
+    {
+      "shape": "矩形 49",
+      "path": "right_result"
+    }
+  ],
+  "image_fields": [
+    {
+      "shape": "图片 44",
+      "path": "category_images[0]",
+      "label": "Image 1"
+    },
+    {
+      "shape": "图片 39",
+      "path": "category_images[1]",
+      "label": "Image 2"
+    },
+    {
+      "shape": "图片 38",
+      "path": "category_images[2]",
+      "label": "Image 3"
+    },
+    {
+      "shape": "图片 43",
+      "path": "category_images[3]",
+      "label": "Image 4"
+    },
+    {
+      "shape": "图片 11",
+      "path": "category_images[4]",
+      "label": "Image 5"
+    },
+    {
+      "shape": "图片 3",
+      "path": "left_images[0]",
+      "label": "Image 6"
+    },
+    {
+      "shape": "图片 1",
+      "path": "left_images[1]",
+      "label": "Image 7"
+    },
+    {
+      "shape": "图片 10",
+      "path": "left_images[2]",
+      "label": "Image 8"
+    },
+    {
+      "shape": "图片 12",
+      "path": "right_images[0]",
+      "label": "Image 9"
+    },
+    {
+      "shape": "图片 9",
+      "path": "right_images[1]",
+      "label": "Image 10"
+    },
+    {
+      "shape": "图片 40",
+      "path": "right_images[2]",
+      "label": "Image 11"
+    },
+    {
+      "shape": "图片 41",
+      "path": "right_images[3]",
+      "label": "Image 12"
+    }
+  ]
+}
