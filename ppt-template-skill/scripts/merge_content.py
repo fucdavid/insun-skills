@@ -134,7 +134,7 @@ def merge_body_relationships(output_dir, slide_idx, body_shapes_xml, media_files
 def merge(output_dir, final_pptx, original_template=None):
     manifest_path = os.path.join(output_dir, 'content_manifest.json')
     if not os.path.exists(manifest_path):
-        print("⚠️  未找到 content_manifest.json，跳过合并步骤")
+        print("WARN missing content_manifest.json, skipped merge")
     else:
         manifest = json.load(open(manifest_path, encoding='utf-8'))
         content_slides = manifest.get('content_slides', [])
@@ -143,12 +143,12 @@ def merge(output_dir, final_pptx, original_template=None):
             idx = slide_info['idx']
             body_pptx = os.path.join(output_dir, f'slide_{idx}_body.pptx')
             if not os.path.exists(body_pptx):
-                print(f"  ⚠️  未找到 {body_pptx}，跳过")
+                print(f"  WARN missing {body_pptx}, skipped")
                 continue
 
             slide_path = os.path.join(output_dir, 'ppt', 'slides', f'slide{idx}.xml')
             if not os.path.exists(slide_path):
-                print(f"  ⚠️  未找到 {slide_path}，跳过")
+                print(f"  WARN missing {slide_path}, skipped")
                 continue
 
             result = extract_body_shapes(body_pptx)
@@ -167,7 +167,7 @@ def merge(output_dir, final_pptx, original_template=None):
             with open(slide_path, 'w', encoding='utf-8') as f:
                 f.write(new_xml)
 
-            print(f"  [slide{idx}] ✅ 正文注入完成")
+            print(f"  [slide{idx}] body injected")
 
     cleanup_intermediate_files(output_dir)
 
@@ -201,10 +201,10 @@ def pack_pptx(unpacked_dir, output_path, original_template=None):
             capture_output=True, text=True
         )
         if result.returncode == 0:
-            print(f"\n✅ 已打包到 {output_path}")
+            print(f"\nOK packed to {output_path}")
             return
         else:
-            print(f"  pack.py 失败，回退到手动打包: {result.stderr}")
+            print(f"  pack.py failed, fallback to manual zip: {result.stderr}")
 
     # 手动打包
     if os.path.exists(output_path):
@@ -220,7 +220,7 @@ def pack_pptx(unpacked_dir, output_path, original_template=None):
                 arcname = os.path.relpath(filepath, unpacked_dir)
                 zout.write(filepath, arcname)
 
-    print(f"\n✅ 已打包到 {output_path}")
+    print(f"\nOK packed to {output_path}")
 
 
 if __name__ == '__main__':

@@ -99,7 +99,7 @@ def clear_text_frames(slide):
 
 def prepare_content_template(slide, slide_data, registry):
     body = slide_data.get("body", {}) if isinstance(slide_data.get("body", {}), dict) else {}
-    meta = registry.get(body.get("layout", "auto"))
+    meta = None if body.get("render_mode") == "adaptive" else registry.get(body.get("layout", "auto"))
     if meta and (meta.owns_title or meta.clear_template_sample_text):
         clear_text_frames(slide)
         return None

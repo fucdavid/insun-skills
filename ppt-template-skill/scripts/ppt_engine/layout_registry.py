@@ -32,6 +32,8 @@ class LayoutRegistry:
                 continue
             if item.get("fidelity") not in {None, "accepted", "ppt_exact"}:
                 continue
+            if item.get("module") == "compiled_shape":
+                continue
             name = item["name"]
             aliases = item.get("aliases", [])
             meta = LayoutMeta(

@@ -27,7 +27,53 @@ def ensure_toc_slide(desired_slides, has_toc_template):
     return slides
 
 
-def replace_cover_text(slide, cover_data, content):
+def shapes_by_name(slide):
+    return {getattr(shape, "name", ""): shape for shape in iter_text_shapes(slide.shapes)}
+
+
+def replace_cover_from_template_spec(slide, cover_data, content, ctx):
+    if ctx is None:
+        return False
+    spec = load_matching_template_spec(ctx)
+    if not spec:
+        return False
+    cover = (spec.get("slide_types") or {}).get("cover") or {}
+    placeholders = cover.get("placeholders") or {}
+    if not placeholders:
+        return False
+
+    by_name = shapes_by_name(slide)
+    field_values = {
+        "title": cover_data.get("title") or content.get("title", ""),
+        "subtitle": cover_data.get("subtitle") or content.get("subtitle", ""),
+        "date": cover_data.get("date") or content.get("date", ""),
+        "author": cover_data.get("author") or content.get("author", ""),
+        "presenter": cover_data.get("presenter") or content.get("presenter", ""),
+        "department": cover_data.get("department") or content.get("department", ""),
+    }
+    replaced = False
+    for field, shape_name in placeholders.items():
+        if isinstance(shape_name, list):
+            for idx, name in enumerate(shape_name):
+                shape = by_name.get(name)
+                if shape is not None:
+                    values = field_values.get(field)
+                    value = values[idx] if isinstance(values, list) and idx < len(values) else ""
+                    replace_text_preserve_shape(shape, value)
+                    replaced = True
+            continue
+        shape = by_name.get(shape_name)
+        if shape is None:
+            continue
+        replace_text_preserve_shape(shape, field_values.get(field, ""))
+        replaced = True
+    return replaced
+
+
+def replace_cover_text(slide, cover_data, content, ctx=None):
+    if ctx is not None and load_matching_template_spec(ctx):
+        replace_cover_from_template_spec(slide, cover_data, content, ctx)
+        return
     shapes = text_shapes(slide)
     if not shapes:
         return
@@ -164,6 +210,31 @@ def render_toc_from_template_spec(slide, slide_data, ctx):
     return replaced
 
 
+def render_transition_from_template_spec(slide, slide_data, ctx):
+    spec = load_matching_template_spec(ctx)
+    if not spec:
+        return False
+    transition = (spec.get("slide_types") or {}).get("transition") or {}
+    placeholders = transition.get("placeholders") or {}
+    if not placeholders:
+        return False
+
+    by_name = shapes_by_name(slide)
+    values = {
+        "chapter": slide_data.get("chapter") or slide_data.get("section") or "",
+        "title": slide_data.get("title") or slide_data.get("page_title") or "",
+        "subtitle": slide_data.get("subtitle") or "",
+    }
+    replaced = False
+    for field, shape_name in placeholders.items():
+        shape = by_name.get(shape_name) if isinstance(shape_name, str) else None
+        if shape is None:
+            continue
+        replace_text_preserve_shape(shape, values.get(field, ""))
+        replaced = True
+    return replaced
+
+
 def load_matching_template_spec(ctx):
     template_path = ctx.template_path
     for spec_path in template_path.parent.glob("*_spec_corrected.json"):
@@ -177,6 +248,9 @@ def load_matching_template_spec(ctx):
 
 
 def render_transition_slide(slide, slide_data, page_num, source, ctx):
+    if ctx is not None and load_matching_template_spec(ctx):
+        render_transition_from_template_spec(slide, slide_data, ctx)
+        return
     chapter = slide_data.get("chapter") or slide_data.get("section") or ""
     heading = slide_data.get("title") or slide_data.get("page_title") or ""
     text_shapes_in_order = list(iter_text_shapes(slide.shapes))
@@ -216,12 +290,18 @@ def render_content_slide(slide, slide_data, page_num, source, registry, ctx, dra
     if layout == "auto":
         layout = infer_auto_layout(body)
     meta = registry.get(layout)
-    if meta and meta.owns_title:
+    if body.get("layout") != "t_variant" and body.get("render_mode") != "adaptive" and meta and meta.owns_title:
         draw_title = False
     if draw_title:
         title(slide, slide_data.get("page_title") or slide_data.get("title", ""), slide_data.get("subtitle"), ctx=ctx)
 
-    renderer = registry.load_renderer(layout)
+    if body.get("layout") == "t_variant":
+        import layouts_impl.t_variants as renderer
+        layout = body.get("variant") or "T4a_cards"
+    elif body.get("render_mode") == "adaptive":
+        import layouts_impl.semantic_adaptive as renderer
+    else:
+        renderer = registry.load_renderer(layout)
     if renderer is None:
         import layouts_impl.basic as renderer
         layout = registry.normalize(layout)

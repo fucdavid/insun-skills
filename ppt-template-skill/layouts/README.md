@@ -1,60 +1,60 @@
 # 排版库使用说明
 
-本目录用于登记内容页排版库，遵循渐进式披露原则。
+本目录的公开排版库同步 `pptx` 技能 `references/t*.md` 的完整 T 系列语义排版方案。
 
-当前排版库只保留用户参考图或参考 PPT 沉淀出的布局。其他曾经实现过的布局如果仍存在于脚本中，只作为内部兜底能力，不作为排版库成员对外推荐。后续用户提供新的排版图片或 PPT 后，再按本流程逐个加入本目录。
+核心原则：
+
+- 内容页统一输出 `slides[].body.layout = "t_variant"`。
+- 具体版式通过 `slides[].body.variant` 指定，例如 `T4a_cards`、`T4e_timeline`、`T7_table`。
+- T 变体实现放在 `layouts/references/t*.md`，每个 md 内提供一个 JS / pptxgenjs 模板函数。
+- 参考 PPT 或参考图片不作为原始 shape 克隆来源；渲染时运行时加载对应 md，把 T 模板的 10 x 5.625 全页坐标映射到当前用户模板的 `body_zone`，颜色和字体继承当前模板。
+- 旧 `registry.json` 只作为历史兼容索引存在，不属于公开排版流程。
+- 内容必须尽量保持用户原始大纲完整，空间不足时拆页，不静默删改。
 
 ## 使用流程
 
-1. 先读取 `registry.json`，根据内容类型选择候选布局。
-2. 确定布局后，只读取该布局对应的详情文件。
-3. 生成 `content.json` 时，只填写当前布局需要的字段。
-4. 不要一次加载所有布局详情，也不要在同一页混塞多个布局字段。
-5. `module=compiled_shape` 的布局只在被实际使用时加载对应 `compiled/` 单页 PPTX 包和 `specs/` 字段映射。
+1. 先读取 `t_variants.json`，根据内容类型选择候选 T 变体。
+2. 生成 `content.json` 时写入该变体需要的语义字段。
+3. `scripts/render_content.js` 根据 `variant` 从 `t_variants.json` 找到 `reference_file` 和 `function`，再按需读取对应 `layouts/references/t*.md`，提取并执行其中的 `pptxgenjs` 模板函数。
+4. 如果内容超过变体容量，优先拆页；不要缩到不可读，也不要改写结论。
+5. 没有专用变体时，使用 `T4a_cards` 或 `T4b_numbered_list` 承载原文要点。
+
+## 当前 T 变体
+
+当前已登记 58 个 T 变体，完整清单以 `t_variants.json` 为准。生成时不要把可用范围硬编码为旧的 7 个变体。
+
+常用内容页变体包括：
+
+- `T4a_cards`、`T4b_numbered_list`、`T4c_text_image`、`T4d_metrics`、`T4e_timeline`
+- `T5_comparison`、`T6_kpi`、`T7_table`
+- `T11_milestone_timeline` 到 `T31_strategy_matrix` 的通用业务结构页
+- `T32_wuhan_marathon_live_plan` 到 `T35_koc_april_summary` 的活动/KOC 规划页
+- `T36_m9_negative_handling` 到 `T44_m9_monitor_split` 的 M9 舆情/评论运营页
+- `T45_byd_core_value_insight` 到 `T54_byd_risk_response_matrix` 的 BYD 口碑项目页
+
+`T1_cover`、`T2_toc`、`T3_transition`、`T8_end`、`T9_dark_cover`、`T10_dark_sidebar_toc` 属于模板角色参考页。使用品牌 PPT 模板生成时，封面、目录、过渡和尾页仍优先克隆用户选择的模板页；这些 T 变体只作为从零生成或用户明确要求时的参考。
 
 ## 新增布局标准
 
-后续新增排版都按 `statement_action_bar` 的标准执行：
+后续新增排版时，先判断它属于现有 T 变体的扩展，还是需要新增 T 变体。
 
-- 优先使用用户提供的 PPTX 作为来源，从 PPT 中提取真实坐标、尺寸、字体层级、形状层级和固定视觉元素；只有没有 PPTX 时才用图片反推。
-- 参考图/PPT 用来沉淀结构和视觉层级，不直接覆盖当前模板的品牌配色和字体；生成时整体配色和字体仍继承所选模板。
-- 必须明确哪些模板原有文本框要复用，哪些示例文本要清空，哪些布局不使用模板标题框。
-- 必须明确哪些视觉元素属于版式本体，需要保留；哪些只是截图批注，不得绘制到 PPT 中。
-- 必须给出字段 schema、适用场景、字数/信息密度限制、溢出处理策略和示例 JSON。
-- 高保真参考 PPT 页优先使用预编译 shape 克隆：生成 `layouts/compiled/<layout>.pptx` 单页包和 `layouts/specs/<layout>.json` 字段映射，registry 中 `module` 使用 `compiled_shape`。
-- 只有确实需要程序化弹性绘制时，才在 `scripts/layouts_impl/<layout_name>.py` 中实现独立布局模块；入口脚本只负责模板克隆、内容调度和按需加载布局模块。
-- 必须在 `layouts/registry.json` 中设置 `status: "ready"`，并设置 `fidelity: "ppt_exact"` 或已由用户验收的 `fidelity: "accepted"`。
-- 必须至少用一个已登记模板生成样例 PPT 验证，检查标题是否重复、示例文字是否残留、文本是否溢出、锚点是否保留、尾页是否原样。
-- 只做语义骨架、近似网格、通用表格或缺少参考页关键视觉元素的实现，不能进入可用排版库；最多作为 draft/unavailable 草稿保留，等待按真实 PPT shape 参数重做。
+新增时必须登记：
+
+- `id`
+- `reference_file`
+- `function`
+- 适用内容类型
+- 字段 schema
+- 容量限制
+- 溢出处理策略
+- 参考来源
+
+新增渲染能力放在 `layouts/references/t*.md`，不是写死进 `scripts/render_content.js`。`render_content.js` 只负责索引读取、md 代码块提取、受控执行、通用字段适配、坐标映射和模板配色适配；不得自行写一套只“看起来像”的近似布局，也不得恢复原始 shape 克隆路径。
 
 ## 质量门槛
 
-新增布局生成效果必须满足：
-
-- 不因为套用模板内容页而出现标题重叠、示例文字残留或目录/尾页丢失。
-- 不把用户大纲内容静默删掉；内容过密时优先拆页或提示，而不是压到不可读字号。
-- 不随意增加未在参考中出现的装饰元素。
-- 不把用户截图中的红框、标注线、选择框等批注当作版式元素。
-- 文本框必须控制换行和字号，不能超出页面或明显越过容器边界。
-
-## 命名规范
-
-- 使用语义化名称，例如 `campaign_three_columns`、`statement_action_bar`。
-- 不使用品牌名、车型名、项目名或截图文件名。
-- 变体使用后缀：`_compact`、`_visual`、`_text`。
-## Current Ready Layouts
-
-- `campaign_three_columns`: 运营规划三栏页 | fields: headline, columns[], footer
-- `sample3_live_overall`: 大型活动直播整体规划页 | fields: title, banner, purpose, strategy, benefit, video_items_left, video_items_right
-- `sample3_ota_timeline`: OTA/传播三阶段策略页 | fields: title, summary, dimensions[], theme, stages[], fee
-- `sample3_koc_monthly_summary`: KOC月度运营总结页 | fields: title, summary, metrics[], topics[], issue
-- `statement_action_bar`: 核心研判行动页 | fields: statement, emphasis, action, action_highlight
-- `sample_opinion_data_overview`: 重点车型投入 | fields: _page_title, period_note, data_title, propagation_table, comment_table, left_images[], right_images[]
-- `sample_attack_handling_gallery`: 重点车型车黑打击情况一览 | fields: _page_title, summary, handling_table, cards[].title, cards[].result, cards[].image, time_period
-- `sample_presale_data_split`: 重点车型投入拆解 | fields: _page_title, period_note, data_title, left_panel, right_panel
-- `sample_opinion_status_dashboard`: 重点产品舆情现状 | fields: _page_title, summary, overall_summary, positive_rate, negative_rate, positive_views, negative_views, handling_result, negative_images[]
-- `sample_comment_quality_dual_path`: 上市期间核心策略举措1 | fields: _page_title, summary, theme, quality_bar, categories[], left_path, right_path, left_result, right_result, category_images[]
-- `sample_launch_strategy_three_actions`: 上市期间核心策略举措1 | fields: _page_title, summary, action1, action2, action3, classification_table, bottom_note
-- `sample_value_breakthrough_dual_columns`: 上市期间核心策略举措2 | fields: _page_title, summary, theme, left_column, right_column
-- `sample_positive_spread_gallery`: 上市期间核心策略举措2 | fields: _page_title, summary, left_topic, right_topic, target
-
+- 不出现标题重叠、示例文字残留或右侧溢出。
+- 不遗漏用户大纲里的关键数据、案例、来源和金句。
+- 不把截图红框、选择框、批注线当作版式元素。
+- 不让参考图/PPT 的品牌色覆盖所选模板的品牌色。
+- 尾页原样保留；封面、目录、过渡页只替换文字，不改样式。

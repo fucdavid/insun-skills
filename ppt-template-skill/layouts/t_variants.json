@@ -1,0 +1,1457 @@
+{
+  "strategy": "progressive_pptx_reference_layouts",
+  "source": "layouts/references/t*.md, copied from the pptx skill reference templates",
+  "rule": "Planning reads only this index. Rendering loads the selected reference_file md and executes its JavaScript template function. Template page roles are reference-only unless the selected PPT template lacks that role and the user explicitly asks for from-scratch pages.",
+  "variants": [
+    {
+      "id": "T1_cover",
+      "reference_file": "t1.md",
+      "function": "createCoverSlide",
+      "name": "T1: 封面页",
+      "description": "function createCoverSlide(pres, C, data) {",
+      "page_role": "cover_reference_only",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T2_toc",
+      "reference_file": "t2.md",
+      "function": "createTocSlide",
+      "name": "T2: 目录页",
+      "description": "function createTocSlide(pres, C, data) {",
+      "page_role": "toc_reference_only",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T3_transition",
+      "reference_file": "t3.md",
+      "function": "createTransitionSlide",
+      "name": "T3: 章节过渡页",
+      "description": "function createTransitionSlide(pres, C, data) {",
+      "page_role": "transition_reference_only",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T4a_cards",
+      "reference_file": "t4a.md",
+      "function": "createCardSlide",
+      "name": "T4a: 卡片式（2-4个并列卡片，每个卡片有白色背景+左侧色条）",
+      "description": "适合：并列的几个要点，每个有标题和描述",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T4b_numbered_list",
+      "reference_file": "t4b.md",
+      "function": "createNumberedSlide",
+      "name": "T4b: 编号列表（左侧大编号圆圈 + 右侧标题和描述，竖向排列）",
+      "description": "适合：3-5个顺序步骤或要点",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T4c_text_image",
+      "reference_file": "t4c.md",
+      "function": "createTextImageSlide",
+      "name": "T4c: 左文右图（左侧文字区域，右侧图片区域）",
+      "description": "适合：有配图的详细说明",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T4d_metrics",
+      "reference_file": "t4d.md",
+      "function": "createStatSlide",
+      "name": "T4d: 大数据+描述（突出2-4个大数字，下方有解释文字）",
+      "description": "适合：需要突出数字/比例/百分比的页面",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T4e_timeline",
+      "reference_file": "t4e.md",
+      "function": "createTimelineSlide",
+      "name": "T4e: 时间线/步骤（水平排列，圆圈+连线+标签）",
+      "description": "适合：按时间/阶段推进的内容",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T5_comparison",
+      "reference_file": "t5.md",
+      "function": "createComparisonSlide",
+      "name": "T5: 左右对比页",
+      "description": "function createComparisonSlide(pres, C, data) {",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T6_kpi",
+      "reference_file": "t6.md",
+      "function": "createKpiSlide",
+      "name": "T6: 数据指标页",
+      "description": "function createKpiSlide(pres, C, data) {",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T7_table",
+      "reference_file": "t7.md",
+      "function": "createTableSlide",
+      "name": "T7: 详细表格页",
+      "description": "function createTableSlide(pres, C, data) {",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T8_end",
+      "reference_file": "t8.md",
+      "function": "createEndSlide",
+      "name": "T8: 结尾页",
+      "description": "function createEndSlide(pres, C, data) {",
+      "page_role": "ending_reference_only",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T9_dark_cover",
+      "reference_file": "t9.md",
+      "function": "createDarkCoverSlide",
+      "name": "T9: 暗底全图封面页（深色背景 + 大标题 + 副标题 + 底部署名条）",
+      "description": "适合：投标案封面、品牌宣传首页，需要视觉冲击力的场景。可选配背景图片。",
+      "page_role": "cover_reference_only",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T10_dark_sidebar_toc",
+      "reference_file": "t10.md",
+      "function": "createDarkSidebarTocSlide",
+      "name": "T10: 暗底侧边目录页（深色背景 + 左侧大号竖排CONTENTS + 右侧带高亮的章节列表）",
+      "description": "适合：多章节方案的目录页/章节切换页，当前章节用主色高亮+三角指示",
+      "page_role": "toc_reference_only",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T11_milestone_timeline",
+      "reference_file": "t11.md",
+      "function": "createMilestoneTimelineSlide",
+      "name": "T11: 时间轴节点页（上升曲线/折线 + 圆形日期节点 + 事件说明卡片）",
+      "description": "适合：产品发展历程、项目里程碑回顾、运营大事记。节点沿曲线排列，交替上下分布。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T12_ecosystem",
+      "reference_file": "t12.md",
+      "function": "createEcosystemSlide",
+      "name": "T12: 中心辐射生态图页（中心圆 + 环绕子节点 + 外围三大色块标签）",
+      "description": "适合：生态体系、组织架构、平台矩阵等中心向外辐射的结构展示",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T13_statement",
+      "reference_file": "t13.md",
+      "function": "createVisionStatementSlide",
+      "name": "T13: 全屏金句宣言页（深色/图片背景 + 上方引导文 + 超大主句 + 下方解释）",
+      "description": "适合：愿景宣言、战略定调、精神口号、章节核心观点突出。比T3更有气势。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T14_strategy_framework",
+      "reference_file": "t14.md",
+      "function": "createStrategyFrameworkSlide",
+      "name": "T14: 策略框架页（顶部主题 + N列策略卡片 + 底部统一基座条）",
+      "description": "适合：多维度并行策略展示，如\"4大运营方向\"、\"3大业务支柱\"等，底部有统一支撑说明。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T15_case_study",
+      "reference_file": "t15.md",
+      "function": "createCaseStudySlide",
+      "name": "T15: 品牌案例分析页（上半：运营矩阵流程图 / 下半：营销亮点+活动示例）",
+      "description": "适合：竞品/行业案例拆解、品牌运营体系展示。上半部分展示架构/流程，下半部分列举亮点。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T16_brand_comparison",
+      "reference_file": "t16.md",
+      "function": "createBrandComparisonSlide",
+      "name": "T16: 多品牌对标总结页（N列品牌并排，每列品牌名+关键词+大号标签）",
+      "description": "适合：竞品分析总结、行业调研小结，并排对比多个品牌的核心运营策略",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T17_swimlane_map",
+      "reference_file": "t17.md",
+      "function": "createSwimLaneMapSlide",
+      "name": "T17: 泳道甘特图/总控MAP页（顶部时间轴 + 多行泳道，每行标注关键活动）",
+      "description": "适合：年度运营总控图、项目排期表、多维度并行计划展示",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T18_activity_calendar",
+      "reference_file": "t18.md",
+      "function": "createActivityCalendarSlide",
+      "name": "T18: 三级活动分类日历页（ABC三类活动分层展示 + 时间轴 + 活动矩阵）",
+      "description": "适合：年度活动规划总览、分级活动管理，按A类/B类/C类分层展示不同规模活动",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T19_status_check",
+      "reference_file": "t19.md",
+      "function": "createStatusCheckSlide",
+      "name": "T19: 现状诊断页（已完成项 ✓ + 待完善项虚线框，状态检查风格）",
+      "description": "适合：项目现状分析、能力成熟度评估、已有成果vs待建设项对比展示。上方展示已达成状态（打勾标签），下方展示待完善事项（虚线框）。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T20_dual_position",
+      "reference_file": "t20.md",
+      "function": "createDualPositionSlide",
+      "name": "T20: 双区并列定位页（左右两个区域各自有名称/理念/Slogan，中间用图形连接）",
+      "description": "适合：主品牌+子品牌定位展示、双产品线对比定位、官方俱乐部+专属社区并列介绍。中间用嵌套圆/连接图形体现从属关系。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T21_pyramid_tier",
+      "reference_file": "t21.md",
+      "function": "createPyramidTierSlide",
+      "name": "T21: 金字塔分级体系页（三角金字塔 + 每级对应权益和义务）",
+      "description": "适合：用户分级管理、会员等级体系、组织层级展示。左侧金字塔分层，右侧每层对应权益/描述。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T22_regional_org",
+      "reference_file": "t22.md",
+      "function": "createRegionalOrgSlide",
+      "name": "T22: 区域组织架构页（左侧地图/区域示意 + 右侧层级流程图）",
+      "description": "适合：全国区域布局、经销商网络体系、组织架构与层级关系展示。左侧用色块示意区域分布，右侧用流程图展示层级关系。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T23_monthly_calendar",
+      "reference_file": "t23.md",
+      "function": "createMonthlyCalendarSlide",
+      "name": "T23: 月度活动日历页（12月份环形/双行排列 + 每月活动名称卡片 + 底部城市标签）",
+      "description": "适合：全年月度活动规划、经销商月度主题活动展示。按月份排列，每月一个主题活动卡片，底部可标注覆盖城市。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T24_process_flow",
+      "reference_file": "t24.md",
+      "function": "createProcessFlowSlide",
+      "name": "T24: 流程推进页（横向3-5个阶段大色块，每阶段下方带详细要点列表+箭头连接）",
+      "description": "适合：运营推进流程、营销活动模板推广路径、从试点到规模化的阶段推进。每阶段一个色块，箭头串联。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T25_tri_hub",
+      "reference_file": "t25.md",
+      "function": "createTriHubSlide",
+      "name": "三角辐射枢纽",
+      "description": "## T25: 三角辐射枢纽页（深色底 + 三个角点卡片汇聚到中心品牌枢纽 + 左侧图例说明）",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T26_dual_row_mapping",
+      "reference_file": "t26.md",
+      "function": "createDualRowMappingSlide",
+      "name": "T26: 上下双行对照页（上行N个要点卡片 + 圆点连接 + 下行N个提炼卡片 + 底部总结条）",
+      "description": "适合：课题解读与提炼、问题与对策对照、需求到方案的映射关系。上行展示原始要点，下行展示对应的提炼/归纳，圆点连接表示映射关系。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T27_brand_benchmark",
+      "reference_file": "t27.md",
+      "function": "createBrandBenchmarkSlide",
+      "name": "T27: 品牌对标调研页（品牌标识+策略描述+下方多栏截图展示）",
+      "description": "适合：行业对标APP/小程序调研、竞品功能拆解。顶部展示品牌名称和核心模式，中间是策略描述段落，下方分栏展示截图或功能模块（每栏有标题+截图占位区+底部说明）。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T28_user_insight",
+      "reference_file": "t28.md",
+      "function": "createUserInsightSlide",
+      "name": "T28: 用户洞察数据页（左侧画像图表区 + 右侧2×2数据网格，每格有大数字+标题+描述）",
+      "description": "适合：用户人群洞察、用户画像分析、市场调研数据展示。左侧放饼图/环形图等画像数据（用色块圆环模拟），右侧2×2网格每格展示一个关键数据维度（大数字+标题+描述）。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T29_data_dashboard",
+      "reference_file": "t29.md",
+      "function": "createDataDashboardSlide",
+      "name": "T29: 多列数据仪表板页（顶部摘要条 + N列编号分栏，每列有标题+摘要+多行数据条）",
+      "description": "适合：APP活跃用户洞察、多维度数据分析、用户特征多列展示。每列一个维度（如职业特征、购车特征、网络特征、行为特征），列内展示多行数据条/进度条。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T30_strategy_slogan",
+      "reference_file": "t30.md",
+      "function": "createStrategySloganSlide",
+      "name": "T30: 策略宣言+双目标页（上方引导文 + 中间超大Slogan + 下方左右两个目标卡片）",
+      "description": "适合：核心策略发布、运营理念阐述、品牌Slogan展示。上方有引导文字说明背景，中间突出超大的策略关键词/Slogan，下方左右分列短期目标和长期目标（或两个并列的策略方向）。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T31_strategy_matrix",
+      "reference_file": "t31.md",
+      "function": "createStrategyMatrixSlide",
+      "name": "T31: 策略执行矩阵页（左侧行标签 + 顶部列标签 + 单元格内容填充 + 底部汇总条）",
+      "description": "适合：直播规划方案、分阶段策略执行计划、OTA传播矩阵、活动运营方案总表。左侧一列为维度标签（如目标/策略/执行线/费用），顶部为阶段或场景列头，交叉单元格填充具体内容。底部可加汇总条（如费用合计）。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T32_wuhan_marathon_live_plan",
+      "reference_file": "t32.md",
+      "function": "createWuhanMarathonLivePlanSlide",
+      "name": "/**",
+      "description": "* T32: 整体直播规划页",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T33_ota_new_media",
+      "reference_file": "t33.md",
+      "function": "createT33OtaNewMediaSlide",
+      "name": "/**",
+      "description": "* T33: OTA传播——新媒体领域",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T34_hyptec_koc_may_plan",
+      "reference_file": "t34.md",
+      "function": "createT34HyptecKocMayPlanSlide",
+      "name": "/**",
+      "description": "* T34: 昊铂 KOC 5月运营规划",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T35_koc_april_summary",
+      "reference_file": "t35.md",
+      "function": "createT35KocAprilSummarySlide",
+      "name": "/**",
+      "description": "* T35: KOC运营4月月度总结",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T36_m9_negative_handling",
+      "reference_file": "t36.md",
+      "function": "createM9NegativeHandlingSlide",
+      "name": "T36: 银河M9负面信息处理看板",
+      "description": "适合：竞品攻击、负面信息删除、黑账号追踪、水军溯源和费用复盘。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T37_m9_comment_repair",
+      "reference_file": "t37.md",
+      "function": "createM9CommentRepairSlide",
+      "name": "T37: 银河M9评论区修复与传播拆解",
+      "description": "适合：上市前评论区口碑修复、单链接维护成效、传播侧扩散数据复盘。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T38_m9_risk_statement",
+      "reference_file": "t38.md",
+      "function": "createM9RiskStatementSlide",
+      "name": "T38: 银河M9上市期攻击风险判断",
+      "description": "适合：阶段判断、风险提醒、口碑攻防策略汇报中的章节结论页。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T39_m9_sentiment_status",
+      "reference_file": "t39.md",
+      "function": "createM9SentimentStatusSlide",
+      "name": "T39: 银河M9销情舆情现状速览",
+      "description": "适合：舆情状态总览、传播数据速览、正负面观点复盘。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T40_m9_quality_strategy",
+      "reference_file": "t40.md",
+      "function": "createM9QualityStrategySlide",
+      "name": "T40: 银河M9评论区质量双升策略",
+      "description": "适合：评论区良性生态建设、优质话术储备、事实/感性内容证据化输出。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T41_m9_quantity_action",
+      "reference_file": "t41.md",
+      "function": "createM9QuantityActionSlide",
+      "name": "T41: 银河M9评论区数量侧动作",
+      "description": "适合：评论区前排占领、楼中楼对攻、传播及舆情内容分级运营。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T42_m9_value_communication",
+      "reference_file": "t42.md",
+      "function": "createM9ValueCommunicationSlide",
+      "name": "T42: 银河M9传播侧价值突围",
+      "description": "适合：技术价值传播、娱乐化传播、豪华车型绑定、高价值心智强化。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T43_m9_positive_boost",
+      "reference_file": "t43.md",
+      "function": "createM9PositiveBoostSlide",
+      "name": "T43: 银河M9正向传播加码",
+      "description": "适合：上市前正向内容加码、一文多态、用户视角内容和官方内容联动。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T44_m9_monitor_split",
+      "reference_file": "t44.md",
+      "function": "createM9MonitorSplitSlide",
+      "name": "T44: 银河M9传播侧+评论区监测双栏",
+      "description": "适合：汽车品牌上市前/预售期传播数据、评论区维护数据的同页汇报。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T45_byd_core_value_insight",
+      "reference_file": "t45.md",
+      "function": "createBydCoreValueInsightSlide",
+      "name": "T45: BYD核心优势三栏洞察页",
+      "description": "适合：背景洞察、产品优势归纳、三大卖点并列说明。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T46_byd_challenge_insight",
+      "reference_file": "t46.md",
+      "function": "createBydChallengeInsightSlide",
+      "name": "T46: BYD三大挑战洞察页",
+      "description": "适合：背景洞察、市场挑战归纳、上市前风险点说明。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T47_byd_overall_strategy",
+      "reference_file": "t47.md",
+      "function": "createBydOverallStrategySlide",
+      "name": "T47: BYD整体策略总纲页",
+      "description": "适合：整体策略发布、三阶段传播路径、总纲口号页。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T48_byd_warmup_plan_table",
+      "reference_file": "t48.md",
+      "function": "createBydWarmupPlanTableSlide",
+      "name": "T48: BYD预热期执行规划表",
+      "description": "适合：执行规划表、阶段打法拆解、标题示例清单。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T49_byd_preheat_sample_cards",
+      "reference_file": "t49.md",
+      "function": "createBydPreheatSampleCardsSlide",
+      "name": "T49: BYD三列内容样例页（对比/价格/审美）",
+      "description": "适合：执行规划中的内容样例页、三专题传播拆解、评论铺设建议。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T50_byd_burst_plan_table",
+      "reference_file": "t50.md",
+      "function": "createBydBurstPlanTableSlide",
+      "name": "T50: BYD爆发期执行规划表",
+      "description": "适合：执行规划表、阶段打法拆解、标题示例清单。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T51_byd_long_tail_plan_table",
+      "reference_file": "t51.md",
+      "function": "createBydLongTailPlanTableSlide",
+      "name": "T51: BYD长尾期执行规划表",
+      "description": "适合：执行规划表、阶段打法拆解、标题示例清单。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T52_byd_burst_sample_cards",
+      "reference_file": "t52.md",
+      "function": "createBydBurstSampleCardsSlide",
+      "name": "T52: BYD三列内容样例页（配置/价值/KOC）",
+      "description": "适合：执行规划中的内容样例页、三专题传播拆解、评论铺设建议。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T53_byd_long_tail_sample_cards",
+      "reference_file": "t53.md",
+      "function": "createBydLongTailSampleCardsSlide",
+      "name": "T53: BYD三列内容样例页（到店/车主/提车）",
+      "description": "适合：执行规划中的内容样例页、三专题传播拆解、评论铺设建议。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    },
+    {
+      "id": "T54_byd_risk_response_matrix",
+      "reference_file": "t54.md",
+      "function": "createBydRiskResponseMatrixSlide",
+      "name": "T54: BYD舆情预判与应对矩阵页",
+      "description": "适合：舆情预判、风险主体拆解、应对策略与监测引导。",
+      "page_role": "content",
+      "content_types": [
+        "auto",
+        "semantic_content"
+      ],
+      "capacity": {},
+      "fields": [
+        "title",
+        "summary",
+        "items[]",
+        "columns[]",
+        "metrics[]",
+        "stages[]",
+        "headers[]",
+        "rows[]",
+        "statement",
+        "quote"
+      ]
+    }
+  ]
+}
